@@ -1,0 +1,13 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/.idea.dotReact.iml
+/contentModel.xml
+# Datasource local storage ignored files
+/../../../../../../:\udemy\dotReact\.idea\.idea.dotReact\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
