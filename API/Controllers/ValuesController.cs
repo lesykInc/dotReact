@@ -6,7 +6,6 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using DataContext = Domain.DataContext;
 
 namespace API.Controllers
 {
@@ -14,13 +13,13 @@ namespace API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly _context;
+        private readonly DataContext _context;
         public ValuesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET api/values 
+        // GET api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Value>>> Get()
         {

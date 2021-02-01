@@ -2,7 +2,7 @@
 
 namespace Domain
 {
-    public class DataContext
+    public class Value
     {
         public int Id { get; set; }
         
