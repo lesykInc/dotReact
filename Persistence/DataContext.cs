@@ -10,7 +10,6 @@ namespace Persistence
         {
             
         }
-        
         public DbSet<Value> Values { get; set; }
     }
 }
