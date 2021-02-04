@@ -11,7 +11,7 @@ class App extends Component{
   }
   
   componentDidMount() {
-    axios.get('http://localhost:5001/api/values')
+    axios.get('http://localhost:5000/api/values')
         .then((response) => {
           console.log(response);
           this.setState({
@@ -28,7 +28,7 @@ class App extends Component{
         <img src={logo} className="App-logo" alt="logo" />
         <ul>
           {this.state.values.map((value: any) => (
-           <li>{value.name}</li>   
+           <li key={value.id}>{value.name}</li>   
           ))}
         </ul>
       </header>
