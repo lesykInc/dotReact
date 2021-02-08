@@ -18,7 +18,7 @@ using Persistence;
 
 namespace API
 {
-    public class  Startup
+    public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -30,7 +30,6 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
@@ -38,16 +37,15 @@ namespace API
             services.AddControllers();
             services.AddCors(opt =>
             {
-                opt.AddPolicy("CorsPolicy", policy =>
-                {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
-                });
+                opt.AddPolicy("CorsPolicy",
+                    policy => { policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"); });
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                c.CustomSchemaIds(type => type.ToString());
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"});
             });
         }
 
@@ -71,13 +69,10 @@ namespace API
             // {
             //     endpoints.MapControllers();
             // });
-            
+
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

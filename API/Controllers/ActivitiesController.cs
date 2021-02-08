@@ -14,7 +14,7 @@ namespace API.Controllers
     public class ActivitiesController : ControllerBase
     {
         private readonly IMediator _mediator;
-        
+
         public ActivitiesController(IMediator mediator)
         {
             _mediator = mediator;
@@ -27,9 +27,9 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Activity> Details(Guid id)
+        public async Task<ActionResult<Activity>> Details(Guid id)
         {
-            return await _mediator.Send(new Details.Query{Id = id});
+            return await _mediator.Send(new Details.Query {Id = id});
         }
 
         [HttpPost]
@@ -44,11 +44,11 @@ namespace API.Controllers
             command.Id = id;
             return await _mediator.Send(command);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<Unit>> Delete(Guid id)
         {
-            return await _mediator.Send(new Delete.Command{Id = id});
+            return await _mediator.Send(new Delete.Command {Id = id});
         }
     }
 }
