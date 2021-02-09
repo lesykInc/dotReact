@@ -8,32 +8,33 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 
 const App = () => {
     const [activities, setActivities] = useState<IActivity[]>([]);
- 
+    const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
+    
+    
+    const handeleSelectActivity = (id: string) => {
+        setSelectedActivity(activities.filter(a => a.id === id)[0])
+    }
+    
     useEffect(() => {
           axios.get<IActivity[]>('http://localhost:5000/api/activities')
               .then((response) => {
-                setActivities(response.data)
+                  setActivities(response.data)
               });
     }, [])
   
-  // on way change activities -> setState
-  // componentDidMount() {
-  //   axios.get<IActivity[]>('http://localhost:5000/api/activities')
-  //       .then((response) => {
-  //         this.setState({
-  //           activities: response.data
-  //         });
-  //       });
-  // }
 
   return (
     <Fragment>
         <NavBar />
         <Container style={{marginTop: '7em'}}>
-            <ActivityDashboard activities={activities} />
+            <ActivityDashboard 
+                activities={activities}
+                selectActivity={handeleSelectActivity}
+                selectedActivity={selectedActivity!}
+            />
         </Container>
     </Fragment>
   );
-}
+};
 
 export default App;
