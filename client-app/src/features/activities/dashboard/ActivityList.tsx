@@ -18,7 +18,7 @@ const ActivityList: React.FC<IProps> = ({activities, selectActivity}) => {
                             <Item.Meta>{activity.date}</Item.Meta>
                             <Item.Description>
                                 <div>{activity.decription}</div>
-                                <div>{activity.city}, {activity.vanue}</div>
+                                <div>{activity.city}, {activity.venue}</div>
                             </Item.Description>
                             <Item.Extra>
                                 <Button
