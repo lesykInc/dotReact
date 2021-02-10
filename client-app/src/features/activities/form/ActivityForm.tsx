@@ -1,13 +1,21 @@
 import React, {FormEvent, useState} from 'react'
 import {Button, Form, Segment } from 'semantic-ui-react'
 import {IActivity} from "../../../app/models/activity";
+import  {v4 as uuid} from 'uuid';
 
 interface IProps {
     setEditMode: (editMode: boolean) => void;
     activity: IActivity;
+    createActivity: (activity: IActivity) => void;
+    editActivity: (activity: IActivity) => void;
 }
 
-const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFormState}) => {
+const ActivityForm: React.FC<IProps> = (
+    {   setEditMode, 
+        activity: initialFormState,
+        createActivity,
+        editActivity
+    }) => {
     
     const intializeForm = () => {
         if (initialFormState) {
@@ -28,13 +36,22 @@ const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFormState
     const [activity, setActivity] = useState<IActivity>(intializeForm);
     
     const handleSubmit = () => {
-        console.log(activity);
-    }
+        if (activity.id.length === 0) {
+            let newActivity = {
+                ...activity,
+                id: uuid()
+            }
+            createActivity(newActivity);
+        } else {
+            editActivity(activity);
+        }
+    };
     
     const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = event.currentTarget;
         setActivity({...activity, [name]: value})
     };
+    
     
     return (
         <Segment clearing>
@@ -66,7 +83,7 @@ const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFormState
                             value={activity.city}
                 />
                 <Form.Input onChange={handleInputChange}
-                            name='vanue' 
+                            name='venue' 
                             placeholder='Venue' 
                             value={activity.venue}
                 />
