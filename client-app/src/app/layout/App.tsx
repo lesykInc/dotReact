@@ -9,6 +9,7 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 const App = () => {
     const [activities, setActivities] = useState<IActivity[]>([]);
     const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
+    const [editMode, setEditMode] = useState(false);
     
     
     const handeleSelectActivity = (id: string) => {
@@ -31,6 +32,8 @@ const App = () => {
                 activities={activities}
                 selectActivity={handeleSelectActivity}
                 selectedActivity={selectedActivity!}
+                editMode={editMode}
+                setEditMode={setEditMode} 
             />
         </Container>
     </Fragment>
