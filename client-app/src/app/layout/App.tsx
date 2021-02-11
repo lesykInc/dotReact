@@ -6,7 +6,7 @@ import NavBar from '../../features/nav/NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 import agent from '../api/agent';
 import LoadingComponent from "./LoadingComponent";
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react-lite';
 import ActivityStore from '../stores/activityStore';
 
 const App = () => {

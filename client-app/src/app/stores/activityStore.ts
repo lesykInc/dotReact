@@ -2,8 +2,13 @@ import { observable, action } from 'mobx';
 import { createContext } from 'react';
 import { IActivity } from '../models/activity';
 import agent from "../api/agent";
+import {makeObservable} from 'mobx';
 
 class ActivityStore {
+
+    constructor() {
+        makeObservable(this);
+    }
     
     @observable activities: IActivity[] = [];
     @observable loadingInitial = false;
