@@ -7,7 +7,7 @@ import ActivityStore from '../../../app/stores/activityStore'
 interface IProps {
     deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
     submitting: boolean;
-    target: string
+    target: string;
 }
 
 const ActivityList: React.FC<IProps> = (
