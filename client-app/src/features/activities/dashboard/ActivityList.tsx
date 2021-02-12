@@ -5,22 +5,10 @@ import {IActivity} from "../../../app/models/activity";
 import ActivityStore from '../../../app/stores/activityStore'
 import {makeAutoObservable} from 'mobx';
 
-interface IProps {
-    deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
-    submitting: boolean;
-    target: string;
-}
-
-
-
-const ActivityList: React.FC<IProps> = (
-    {         deleteActivity,
-        submitting,
-        target
-    }) => {
+const ActivityList: React.FC = () => {
     
     const activityStore = useContext(ActivityStore);
-    const {activitiesByDate, selectActivity} = activityStore;
+    const {activitiesByDate, selectActivity, deleteActivity, submitting, target} = activityStore;
     
     return (
         <Segment clearing>
