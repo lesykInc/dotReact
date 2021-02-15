@@ -4,7 +4,9 @@ import { Item, Button, Label, Segment } from 'semantic-ui-react';
 import ActivityStore from '../../../app/stores/activityStore'
 import {makeAutoObservable} from 'mobx';
 
-const ActivityList: React.FC = () => {
+export default function ActivityList() {
+
+// const ActivityList: React.FC = () => {
     
     const activityStore = useContext(ActivityStore);
     const {activitiesByDate, selectActivity, deleteActivity, submitting, target} = activityStore;
@@ -48,4 +50,4 @@ const ActivityList: React.FC = () => {
     );
 };
 
-export default observer(ActivityList)
+// export default observer(ActivityList)
