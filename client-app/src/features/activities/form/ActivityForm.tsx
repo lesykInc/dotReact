@@ -15,7 +15,7 @@ const ActivityForm: React.FC<IProps> = (
     }) => {
     
     const activityStore = useContext(ActivityStore);
-    const {createActivity, editActivity, submitting, cancerFormOpen} = activityStore;
+    const {createActivity, editActivity, submitting, cancelFormOpen} = activityStore;
     
     
     const intializeForm = () => {
@@ -41,7 +41,7 @@ const ActivityForm: React.FC<IProps> = (
             let newActivity = {
                 ...activity,
                 id: uuid()
-            }
+            };
             createActivity(newActivity);
         } else {
             editActivity(activity);
@@ -89,13 +89,13 @@ const ActivityForm: React.FC<IProps> = (
                             value={activity.venue}
                 />
                 <Button loading={submitting} floated='right' positive type='submit' content='Submit' />
-                <Button onClick={cancerFormOpen} 
+                <Button onClick={cancelFormOpen} 
                         floated='left' 
                         type='button' 
                         content='Cancel' />
             </Form>
         </Segment>
-    )
-}
+    );
+};
 
-export default observer(ActivityForm)
+export default observer(ActivityForm);

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { SyntheticEvent, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Grid } from 'semantic-ui-react';
 import ActivityDetails from '../details/ActivityDetails';
 import ActivityForm from '../form/ActivityForm';
@@ -19,11 +19,12 @@ const ActivityDashboard: React.FC = () => {
                 {selectedActivity && !editMode && (
                     <ActivityDetails />
                     )}
-                {editMode && 
+                {editMode && (
                 <ActivityForm 
                     key={(selectedActivity && selectedActivity.id) || 0}
                     activity={selectedActivity!}
-                /> }
+                /> 
+                )}
             </Grid.Column>
         </Grid>    
     );
