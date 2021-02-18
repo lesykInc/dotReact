@@ -5,9 +5,7 @@ import ActivityStore from '../../../app/stores/activityStore'
 import {makeAutoObservable} from 'mobx';
 import { Link } from 'react-router-dom';
 
-export default function ActivityList() {
-
-// const ActivityList: React.FC = () => {
+const ActivityList: React.FC = () => {
     
     const activityStore = useContext(ActivityStore);
     const {activitiesByDate, selectActivity, deleteActivity, submitting, target} = activityStore;
@@ -21,7 +19,7 @@ export default function ActivityList() {
                             <Item.Header as='a'>{activity.title}</Item.Header>
                             <Item.Meta>{activity.date}</Item.Meta>
                             <Item.Description>
-                                <div>{activity.decription}</div>
+                                <div>{activity.description}</div>
                                 <div>{activity.city}, {activity.venue}</div>
                             </Item.Description>
                             <Item.Extra>
@@ -51,4 +49,4 @@ export default function ActivityList() {
     );
 };
 
-// export default observer(ActivityList)
+export default observer(ActivityList)

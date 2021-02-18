@@ -17,7 +17,7 @@ const ActivityDetails: React.FC = () => {
                     <span>{activity!.date}</span>
                 </Card.Meta>
                 <Card.Description>
-                    {activity!.decription}
+                    {activity!.description}
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>

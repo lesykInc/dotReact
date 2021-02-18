@@ -26,7 +26,7 @@ const ActivityForm: React.FC<IProps> = (
                 id: '',
                 title: '',
                 category: '',
-                decription: '',
+                description: '',
                 date: '',
                 city: '',
                 venue: ''
@@ -65,7 +65,7 @@ const ActivityForm: React.FC<IProps> = (
                 <Form.TextArea onChange={handleInputChange}
                                name='decription' rows={2} 
                                placeholder='Description' 
-                               value={activity.decription}
+                               value={activity.description}
                 />
                 <Form.Input onChange={handleInputChange}
                             name='category' 

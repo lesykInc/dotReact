@@ -15,16 +15,16 @@ import ActivityDetails from '../../features/activities/details/ActivityDetails';
 const App = () => {
     
   return (
-    <>
+    <Fragment>
         <NavBar />
         <Container style={{marginTop: '7em'}}>
             <Route exact path='/' component={HomePage}/>
-            <Route exact path='/activiteis' component={ActivityDashboard}/>
+            <Route exact path='/activities' component={ActivityDashboard}/>
             <Route path='/activitei/:id' component={ActivityDetails}/>
             <Route path='/createActivity' component={ActivityForm}/>
-            <ActivityDashboard />
+            {/*<ActivityDashboard />*/}
         </Container>
-    </>
+    </Fragment>
   );
 };
 

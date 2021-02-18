@@ -12,9 +12,6 @@ const ActivityDashboard: React.FC = () => {
     const activityStore = useContext(ActivityStore);
     const {editMode, selectedActivity} = activityStore;
 
-//    const activityStore = useContext(ActivityStore);
-    // const {activityStore} = useStore();
-
     useEffect(() => {
         activityStore.loadActivities();
     }, [activityStore])
