@@ -104,8 +104,74 @@ namespace Persistence
                         Venue = "Cinema",
                     }
                 };
-
+            
                 context.Activities.AddRange(activities);
+                context.SaveChanges();
+            }
+            
+            if (!context.Posts.Any())
+            {
+                var posts = new List<Post>
+                {
+                    new Post
+                    {
+                        Title = "Post 1",
+                        Body = "Activity 2 months ago",
+                        CreatedDate = DateTime.Now.AddMonths(-1),
+                        LastUpdatedDate = DateTime.Now.AddMonths(-1)
+                    },
+                    new Post
+                    {
+                        Title = "Post 2",
+                        Body = "Activity 2 months ago",
+                        CreatedDate = DateTime.Now.AddMonths(-1),
+                        LastUpdatedDate = DateTime.Now.AddMonths(-1)
+                    },
+                    new Post
+                    {
+                        Title = "Post 3",
+                        Body = "Activity 2 months ago",
+                        CreatedDate = DateTime.Now.AddMonths(-1),
+                        LastUpdatedDate = DateTime.Now.AddMonths(-1)
+                    },
+                    new Post
+                    {
+                        Title = "Post 4",
+                        Body = "Activity 2 months ago",
+                        CreatedDate = DateTime.Now.AddMonths(-1),
+                        LastUpdatedDate = DateTime.Now.AddMonths(-1)
+                    },
+                    new Post
+                    {
+                        Title = "Post 5",
+                        Body = "Activity 2 months ago",
+                        CreatedDate = DateTime.Now.AddMonths(-1),
+                        LastUpdatedDate = DateTime.Now.AddMonths(-1)
+                    },
+                    new Post
+                    {
+                        Title = "Post 6",
+                        Body = "Activity 2 months ago",
+                        CreatedDate = DateTime.Now.AddMonths(-1),
+                        LastUpdatedDate = DateTime.Now.AddMonths(-1)
+                    },
+                    new Post
+                    {
+                        Title = "Post 7",
+                        Body = "Activity 2 months ago",
+                        CreatedDate = DateTime.Now.AddMonths(-1),
+                        LastUpdatedDate = DateTime.Now.AddMonths(-1)
+                    },
+                    new Post
+                    {
+                        Title = "Post 8",
+                        Body = "Activity 2 months ago",
+                        CreatedDate = DateTime.Now.AddMonths(-1),
+                        LastUpdatedDate = DateTime.Now.AddMonths(-1)
+                    }
+                };
+            
+                context.Posts.AddRange(posts);
                 context.SaveChanges();
             }
         }

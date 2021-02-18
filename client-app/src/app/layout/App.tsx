@@ -10,6 +10,7 @@ import { Route } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import ActivityForm from '../../features/activities/form/ActivityForm';
 import ActivityDetails from '../../features/activities/details/ActivityDetails';
+import PostList from '../../features/posts/PostList';
 // import { useStore } from '../stores/store';
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
             <Route exact path='/activities' component={ActivityDashboard}/>
             <Route path='/activities/:id' component={ActivityDetails}/>
             <Route path='/createActivity' component={ActivityForm}/>
+            <Route path='/posts' component={PostList}/>
             {/*<ActivityDashboard />*/}
         </Container>
     </Fragment>

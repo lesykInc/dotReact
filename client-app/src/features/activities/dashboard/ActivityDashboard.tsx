@@ -28,6 +28,6 @@ const ActivityDashboard: React.FC = () => {
             </Grid.Column>
         </Grid>    
     );
-};
+};     
 
 export default observer(ActivityDashboard)
