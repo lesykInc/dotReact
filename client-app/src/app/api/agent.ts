@@ -1,5 +1,6 @@
 import axios, {AxiosResponse }from 'axios';
 import { IActivity } from '../models/activity';
+import { IPost } from '../models/post';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
@@ -24,6 +25,15 @@ const Activities = {
     delete: (id: string) => requests.del(`/activities/${id}`)
 }
 
+const Posts = {
+    list: (): Promise<IPost[]> => requests.get('/activities'),
+    details: (id: string) => requests.get(`/activities/${id}`),
+    create: (post: IPost) => requests.post(`/activities`, post),
+    update: (post: IPost) => requests.put(`/activities/${post.id}`, post),
+    delete: (id: string) => requests.del(`/activities/${id}`)
+}
+
 export default {
-    Activities
+    Activities,
+    Posts
 }

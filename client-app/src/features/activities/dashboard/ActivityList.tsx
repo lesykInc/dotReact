@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { Item, Button, Label, Segment } from 'semantic-ui-react';
 import ActivityStore from '../../../app/stores/activityStore'
 import {makeAutoObservable} from 'mobx';
+import { Link } from 'react-router-dom';
 
 const ActivityList: React.FC = () => {
     
@@ -18,12 +19,12 @@ const ActivityList: React.FC = () => {
                             <Item.Header as='a'>{activity.title}</Item.Header>
                             <Item.Meta>{activity.date}</Item.Meta>
                             <Item.Description>
-                                <div>{activity.decription}</div>
+                                <div>{activity.description}</div>
                                 <div>{activity.city}, {activity.venue}</div>
                             </Item.Description>
                             <Item.Extra>
                                 <Button
-                                    onClick={() => selectActivity(activity.id)} 
+                                    as={Link} to={`/activities/${activity.id}`}
                                     floated='right' 
                                     content='View' 
                                     color='blue' 
