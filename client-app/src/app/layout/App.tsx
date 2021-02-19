@@ -11,6 +11,7 @@ import HomePage from '../../features/home/HomePage';
 import ActivityForm from '../../features/activities/form/ActivityForm';
 import ActivityDetails from '../../features/activities/details/ActivityDetails';
 import PostList from '../../features/posts/PostList';
+import PostForm from '../../features/posts/PostForm';
 // import { useStore } from '../stores/store';
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
             <Route path='/activities/:id' component={ActivityDetails}/>
             <Route path='/createActivity' component={ActivityForm}/>
             <Route path='/posts' component={PostList}/>
+            <Route path='/createPost' component={PostForm}/>
             {/*<ActivityDashboard />*/}
         </Container>
     </Fragment>
