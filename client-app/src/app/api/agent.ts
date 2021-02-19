@@ -26,11 +26,11 @@ const Activities = {
 }
 
 const Posts = {
-    list: (): Promise<IPost[]> => requests.get('/activities'),
-    details: (id: string) => requests.get(`/activities/${id}`),
-    create: (post: IPost) => requests.post(`/activities`, post),
-    update: (post: IPost) => requests.put(`/activities/${post.id}`, post),
-    delete: (id: string) => requests.del(`/activities/${id}`)
+    list: (): Promise<IPost[]> => requests.get('/posts'),
+    details: (id: string) => requests.get(`/posts/${id}`),
+    create: (post: IPost) => requests.post(`/posts`, post),
+    update: (post: IPost) => requests.put(`/posts/${post.id}`, post),
+    delete: (id: string) => requests.del(`/posts/${id}`)
 }
 
 export default {
