@@ -1,16 +1,15 @@
 import { observer } from 'mobx-react-lite';
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Item, Button, Label, Segment, Grid, Container, TextArea, Form, Pagination, Modal, Icon, Divider} from 'semantic-ui-react';
 import PostStore from '../../app/stores/postStore'
 import {makeAutoObservable} from 'mobx';
 import { Link } from 'react-router-dom';
+import PostWarning from './PostWarning';
 
 const PostList: React.FC = () => {
 
     const postStore = useContext(PostStore);
     const {postsByDate, selectPost, deletePost, submitting, target} = postStore;
-    
-    const [open, setOpen] = React.useState(false)
 
     useEffect(() => {
         postStore.loadPosts();
@@ -40,29 +39,7 @@ const PostList: React.FC = () => {
                             </Grid.Column>
                             <Grid.Column floated='right' width={2}>
                                 <Item.Meta>{post.lastUpdatedDate}</Item.Meta>
-                                <Modal
-                                    basic
-                                    onClose={() => setOpen(false)}
-                                    onOpen={() => setOpen(true)}
-                                    open={open}
-                                    size='small'
-                                    trigger={<Button color='red' content='Delete' floated='left'/>}
-                                >
-                                    <Modal.Content style={{textAlign: 'center'}}>
-                                        <h2>Warning</h2>
-                                        <p>
-                                            Are you sure you would like to delete?
-                                        </p>
-                                    </Modal.Content>
-                                    <Modal.Actions>
-                                        <Button basic color='green' inverted onClick={() => setOpen(false)}>
-                                            <Icon name='remove' /> No
-                                        </Button>
-                                        <Button color='red' inverted onClick={() => setOpen(false)}>
-                                            <Icon name='checkmark' /> Yes
-                                        </Button>
-                                    </Modal.Actions>
-                                </Modal>
+                                <PostWarning />
                                 <Button 
                                     // onClick={() => selectPost(post.id)}
                                     as={Link} to={`/posts/${post.id}`}
