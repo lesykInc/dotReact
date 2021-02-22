@@ -12,10 +12,8 @@ export class ActivityStore {
     }
     
     @observable activityRegistry = new Map();
-    @observable activities: IActivity[] = []
     @observable activity: IActivity | null = null;
     @observable loadingInitial = false;
-    @observable editMode = false;
     @observable submitting = false;
     @observable target = '';
     
@@ -45,11 +43,6 @@ export class ActivityStore {
     @action setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
-    
-    @action selectActivity = (id: string) => {
-        this.activity = this.activityRegistry.get(id);
-        this.editMode = false;
-    };
 
     @action createActivity = async (activity: IActivity) => {
         this.submitting = true;
@@ -57,7 +50,6 @@ export class ActivityStore {
             await agent.Activities.create(activity);
             runInAction( () => {
                 this.activityRegistry.set(activity.id, activity);
-                this.editMode = false;
                 this.submitting = false;
             })
         } catch (error) {
@@ -68,16 +60,6 @@ export class ActivityStore {
         }
     };
     
-    @action openCreateForm = () => {
-        this.editMode = true;
-        this.activity = null;
-    }
-    
-    @action openEditForm = (id: string) => {
-        this.activity = this.activityRegistry.get(id);
-        this.editMode = true;
-    }
-    
     @action editActivity = async (activity: IActivity) => {
         this.submitting = true;
         try {
@@ -85,7 +67,6 @@ export class ActivityStore {
             runInAction(() => {
                 this.activityRegistry.set(activity.id, activity);
                 this.activity = activity;
-                this.editMode = false;
                 this.submitting = false;    
             });
         } catch (error) {
@@ -114,14 +95,6 @@ export class ActivityStore {
             console.log(error);
         }
         
-    }
-    
-    @action cancelSelectedActivity = () => {
-        this.activity = null;
-    }
-    
-    @action cancelFormOpen = () => {
-        this.editMode = false;
     }
     
     @action loadActivity = async (id: string) => {
