@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect } from 'react'
-import {Link, RouteComponentProps } from 'react-router-dom';
-import { Card, Image, Button, Grid } from 'semantic-ui-react'
+import { RouteComponentProps } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react'
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import ActivityStore from '../../../app/stores/activityStore'
 import ActivityDetailedChat from './ActivityDetailedChat';
@@ -28,8 +28,8 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailsParams>> = ({match}) 
     return (
        <Grid>
            <Grid.Column width={10}>
-               <ActivityDetailedHeader />
-               <ActivityDetailedInfo />
+               <ActivityDetailedHeader activity={activity}/>
+               <ActivityDetailedInfo activity={activity}/>
                <ActivityDetailedChat />
            </Grid.Column>
            <Grid.Column width={6}>
