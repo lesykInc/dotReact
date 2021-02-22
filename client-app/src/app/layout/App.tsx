@@ -16,21 +16,29 @@ import PostDashboard from '../../features/posts/postDashboard/PostDashboard';
 // import { useStore } from '../stores/store';
 
 const App: React.FC<RouteComponentProps> = ({location}) => {
-    
-  return (
-    <Fragment>
-        <NavBar />
-        <Container style={{marginTop: '7em'}}>
-            <Route exact path='/' component={HomePage}/>
-            <Route exact path='/activities' component={ActivityDashboard}/>
-            <Route path='/activities/:id' component={ActivityDetails}/>
-            <Route key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm}/>
-            <Route path='/posts' component={PostDashboard}/>
-            <Route path='/createPost' component={PostForm} />
-            {/*<ActivityDashboard />*/}
-        </Container>
-    </Fragment>
-  );
+
+    return (
+        <Fragment>
+            <Route exact path='/' component={HomePage} />
+            <Route
+                path={'/(.+)'}
+                render={() => (
+                    <Fragment>
+                        <NavBar />
+                        <Container style={{ marginTop: '7em' }}>
+                            <Route exact path='/activities' component={ActivityDashboard} />
+                            <Route path='/activities/:id' component={ActivityDetails} />
+                            <Route
+                                key={location.key}
+                                path={['/createActivity', '/manage/:id']}
+                                component={ActivityForm}
+                            />
+                        </Container>
+                    </Fragment>
+                )}
+            />
+        </Fragment>
+    );
 };
 
 export default withRouter(observer(App));
