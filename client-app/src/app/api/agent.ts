@@ -6,8 +6,14 @@ import {history} from '../..'
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 axios.interceptors.request.use(undefined, error => {
-    if (error.response.status === 404) {
-        history.push('/notfound')
+    
+    const {status, data, config} = error.response;
+    
+    if (status === 404) {
+        history.push('/notfound');
+    }
+    if(status === 404 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
+        history.push('/notfound');
     }
 });
 
