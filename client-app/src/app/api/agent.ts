@@ -4,6 +4,10 @@ import { IPost } from '../models/post';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
+axios.interceptors.request.use(undefined, error => {
+    console.log(error.response);
+});
+
 const responseBody = (responce: AxiosResponse) => responce.data;
 
 const sleep = (ms: number) => (response: AxiosResponse) => 
