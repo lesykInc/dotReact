@@ -11,4 +11,6 @@ https://reactrouter.com/
 
 Notification
 >npm install react-toastify
+For json
+Newtonsoft.Json (nuget)
 
