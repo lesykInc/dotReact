@@ -54,7 +54,7 @@ namespace Application.Activities
                 var activity = await _context.Activities.FindAsync(request.Id);    
 
                 if (activity == null)
-                    throw new RestExeption(HttpStatusCode.NotFound, new {activity = "Not found"});
+                    throw new RestException(HttpStatusCode.NotFound, new {activity = "Not found"});
                 
                 //               if this null  ->  this executed
                 activity.Title = request.Title ?? activity.Title;            
