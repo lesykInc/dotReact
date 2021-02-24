@@ -25,9 +25,9 @@ export class ActivityStore {
         const sortedActivities = activities.sort(
             (a,b) => Date.parse(a.date) - Date.parse(b.date)
         )
-        return Object.entries(sortedActivities.reduce((activities, activty) => {
-            const date = activty.date.split('T')[0];
-            activities[date] = activities[date] ? [...activities[date], activty] : [activty];
+        return Object.entries(sortedActivities.reduce((activities, activity) => {
+            const date = activity.date.split('T')[0];
+            activities[date] = activities[date] ? [...activities[date], activity] : [activity];
             return activities;
         }, {} as {[key: string]: IActivity[]}));
     }
@@ -38,7 +38,7 @@ export class ActivityStore {
             const activities = await agent.Activities.list();
             runInAction(() => {
                 activities.forEach(activity => {
-                    activity.date = activity.date.split('***')[0];
+                    activity.date = activity.date.split('T')[0];
                     this.activityRegistry.set(activity.id, activity);
                 });
                 this.loadingInitial = false;
