@@ -17,3 +17,9 @@ Newtonsoft.Json (nuget) to API
 For Form
 >npm install react-final-form final-form
 
+React widjects for date
++ need dat-fns
+>npm install react-widgets react-widgets-date-fns
+>npm install react-widgets@4.4.11 react-widgets-date-fns@4.0.26 date-fns@2.0.0-alpha.13
+
+
