@@ -10,6 +10,7 @@ import TextInput from '../../../app/common/form/TextInput';
 import TextAreaInput from '../../../app/common/form/TextAreaInput';
 import SelectInput from '../../../app/common/form/SelectInput';
 import { category } from '../../../app/common/options/categoryOptions';
+import DateInput from "../../../app/common/form/DateInput";
 
 interface DetailParams {
     id: string;
@@ -25,7 +26,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
         title: '',
         category: '',
         description: '',
-        date: '',
+        date: null ,
         city: '',
         venue: ''
     });
@@ -88,8 +89,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
                             <Field
                                         name='date'
                                         placeholder='Date'
-                                        value={activity.date}
-                                        component={TextInput}
+                                        value={activity.date!}
+                                        component={DateInput}
                             />
                             <Field
                                         name='city'
