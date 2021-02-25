@@ -1,6 +1,6 @@
-import React, {FormEvent, useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState} from 'react'
 import {Button, Form, Grid, Segment } from 'semantic-ui-react'
-import {ActivityFormValues, IActivityFormValues} from "../../../app/models/activity";
+import {ActivityFormValues} from "../../../app/models/activity";
 import  {v4 as uuid} from 'uuid';
 import ActivityStore from '../../../app/stores/activityStore';
 import { observer } from 'mobx-react-lite';
@@ -12,6 +12,22 @@ import SelectInput from '../../../app/common/form/SelectInput';
 import { category } from '../../../app/common/options/categoryOptions';
 import DateInput from "../../../app/common/form/DateInput";
 import { combineDateAndTime } from '../../../app/common/util/util';
+import {combineValidators, composeValidators, hasLengthGreaterThan, isRequired} from 'revalidate';
+
+const validate = combineValidators({
+    title: isRequired({ message: 'The event title is required' }),
+    category: isRequired('Category'),
+    description: composeValidators(
+        isRequired('Description'),
+        hasLengthGreaterThan(4)({
+            message: 'Description needs to be at least 5 characters'
+        })
+    )(),
+    city: isRequired('City'),
+    venue: isRequired('Venue'),
+    date: isRequired('Date'),
+    time: isRequired('Time')
+});     
 
 interface DetailParams {
     id: string;
@@ -20,7 +36,7 @@ interface DetailParams {
 const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, history}) => {
     
     const activityStore = useContext(ActivityStore);
-    const {createActivity, editActivity, submitting, activity: initialFormState, loadActivity, clearActivity} = activityStore;
+    const {createActivity, editActivity, submitting, loadActivity} = activityStore;
     
     const [activity, setActivity] = useState(new ActivityFormValues());
     const [loading, setLoading] = useState(false);
@@ -32,7 +48,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
                 .then((activity) => setActivity(new ActivityFormValues(activity)))
                 .finally(() => setLoading(false));
         }
-    }, [loadActivity, clearActivity]);
+    }, [loadActivity, match.params.id]);
     
     const handleFinalFormSubmit = (values: any) => {
         const dateAndTime = combineDateAndTime(values.date, values.time);
@@ -54,9 +70,10 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
             <Grid.Column width={10}>
                 <Segment clearing>
                     <FinalForm
+                    validate={validate}    
                     initialValues={activity}    
                     onSubmit={handleFinalFormSubmit}
-                    render={({handleSubmit}) => (
+                    render={({handleSubmit, invalid, pristine}) => (
                         <Form onSubmit={handleSubmit} loading={loading}>
                             <Field 
                                         name='title'
@@ -112,7 +129,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({match, histo
                                     positive 
                                     type='submit' 
                                     content='Submit'
-                                    disabled={loading}
+                                    disabled={loading || invalid || pristine}
                             />
                             <Button onClick={activity.id
                                 ? () => history.push(`/activities/${activity.id}`) 
