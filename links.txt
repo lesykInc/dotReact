@@ -27,8 +27,8 @@ client-side-validation -> revalidate
 >npm install revalidate
 >npm i --save-dev @types/revalidate
 
+# 5.0.2
 Identity
 Microsoft.AspNetCore.Identity.EntityFrameworkCore  -> Domain
-
 *dotnet ef migrations add "AddedIdentity" -p Persistence/ -s API/
-
+AspNetCore.Identity.UI -> API
