@@ -3,10 +3,12 @@ using Application.Activities;
 using Domain;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,7 +46,11 @@ namespace API
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
-            services.AddMvc()
+            services.AddMvc(opt =>
+                {
+                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                    opt.Filters.Add(new AuthorizeFilter(policy));
+                })
                 .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
@@ -52,6 +58,8 @@ namespace API
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            
+            services.AddAuthentication();
             
             services.AddSwaggerGen(c =>
             {
