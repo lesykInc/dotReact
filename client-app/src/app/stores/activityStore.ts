@@ -2,6 +2,7 @@ import { observable, action, computed, configure, runInAction, makeAutoObservabl
 import {createContext, SyntheticEvent} from 'react';
 import { IActivity } from '../models/activity';
 import agent from "../api/agent";
+import {history} from '../..';
 
 configure({enforceActions: 'always'});
 
@@ -61,7 +62,8 @@ export class ActivityStore {
             runInAction( () => {
                 this.activityRegistry.set(activity.id, activity);
                 this.submitting = false;
-            })
+            });
+            history.push(`/activities/${activity.id}`)
         } catch (error) {
             runInAction( () => {
                 this.submitting = false;
@@ -119,6 +121,7 @@ export class ActivityStore {
                 runInAction(() => {
                   activity.date = new Date(activity.date);  
                   this.activity = activity;
+                    this.activityRegistry.set(activity.id, activity);
                   this.loadingInitial = false;
                 })
                 return activity;
