@@ -32,3 +32,10 @@ Identity
 Microsoft.AspNetCore.Identity.EntityFrameworkCore  -> Domain
 *dotnet ef migrations add "AddedIdentity" -p Persistence/ -s API/
 AspNetCore.Identity.UI -> API
+
+
+#create new project for implements JWT
+dotnet new classlib -n Infrastructure
+dotnet sln add Infrastructure/  
+C:\Users\lesyk\RiderProjects\dotReact\Infrastructure>dotnet add reference ../Application/
+ 
