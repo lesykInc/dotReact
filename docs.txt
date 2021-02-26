@@ -41,4 +41,8 @@ C:\Users\lesyk\RiderProjects\dotReact\Infrastructure>dotnet add reference ../App
 System.IdentityModel.Tokens.Jwt 5.5.0 -> Infrastructure
 # fixed bug? 5.0.2 (like runtime)
 Microsoft.AspNetCore.Authentication.JwtBearer -> API
+
+dotnet user-secrets init -p API/
+or
+dotnet user-secrets set "TokenKey" "super secret key"
  
