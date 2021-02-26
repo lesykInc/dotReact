@@ -39,4 +39,6 @@ dotnet new classlib -n Infrastructure
 dotnet sln add Infrastructure/  
 C:\Users\lesyk\RiderProjects\dotReact\Infrastructure>dotnet add reference ../Application/
 System.IdentityModel.Tokens.Jwt 5.5.0 -> Infrastructure
+# fixed bug? 5.0.2 (like runtime)
+Microsoft.AspNetCore.Authentication.JwtBearer -> API
  
