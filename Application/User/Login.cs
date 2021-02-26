@@ -26,11 +26,17 @@ namespace Application.User
                 RuleFor(x => x.Password).NotEmpty();
             }
         }
-
-        public class Handler : IRequestHandler<Query,AppUser>
+    
+        public class Handler : IRequestHandler<Query, AppUser>
         {
             private readonly UserManager<AppUser> _userManager;
-            private readonly SignInManager<AppUser> _signInManager; 
+            private readonly SignInManager<AppUser> _signInManager;
+            
+            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+            {
+                _userManager = userManager;
+                _signInManager = signInManager;
+            }
 
             public async Task<AppUser> Handle(Query request, CancellationToken cancellationToken)
             {
