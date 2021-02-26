@@ -1,7 +1,9 @@
 using API.Middleware;
 using Application.Activities;
+using Application.Interfaces;
 using Domain;
 using FluentValidation.AspNetCore;
+using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -60,6 +62,8 @@ namespace API
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
             
             services.AddAuthentication();
+
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
             
             services.AddSwaggerGen(c =>
             {
