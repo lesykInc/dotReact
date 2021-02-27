@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     public class UserController : BaseController
     {
-        [AllowAnonymous]
+        
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login(Login.Query query)
         {

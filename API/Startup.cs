@@ -51,10 +51,10 @@ namespace API
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
-            services.AddMvc(opt =>
+            services.AddControllers(opt =>
                 {
-                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                    opt.Filters.Add(new AuthorizeFilter(policy));
+                      var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                      opt.Filters.Add(new AuthorizeFilter(policy));
                 })
                 .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
@@ -106,7 +106,7 @@ namespace API
             
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
