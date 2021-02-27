@@ -81,6 +81,7 @@ namespace API
                 });
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
             
             services.AddSwaggerGen(c =>
             {
