@@ -52,10 +52,12 @@ namespace API
 
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddControllers(opt =>
-                {
-                      var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                      opt.Filters.Add(new AuthorizeFilter(policy));
-                })
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            });
+                
+                services.AddMvc()
                 .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
             
