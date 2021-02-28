@@ -25,13 +25,13 @@ const LoginForm = () => {
             render={({
                          handleSubmit,
                          submitting,
-                         form,
                          submitError,
                          invalid,
                          pristine,
                          dirtyFieldsSinceLastSubmit
                      }) => (
-                <Form onSubmit={handleSubmit} error>
+                <Form onSubmit={handleSubmit}>
+                    <Header as={'h2'} content={'Login to dotReact'} color={"teal"} textAlign={"center"}  />
                     <Field name='email' component={TextInput} placeholder='Email' />
                     <Field
                         name='password'
@@ -41,12 +41,12 @@ const LoginForm = () => {
                     />
                     {submitError && !dirtyFieldsSinceLastSubmit &&
                     (<Label color="red" basic content={submitError.statusText} />)}
-                    <br/>
                     <Button
-                        disabled={invalid || !dirtyFieldsSinceLastSubmit || pristine}
+                        disabled={(invalid || !dirtyFieldsSinceLastSubmit) || pristine}
                         loading={submitting}
-                        positive
+                        color={"teal"}
                         content='Login'
+                        fluid
                     />
                 </Form>
             )}
