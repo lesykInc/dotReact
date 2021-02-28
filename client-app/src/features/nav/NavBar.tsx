@@ -7,7 +7,7 @@ import { RootStoreContext } from '../../app/stores/rootStore';
 const NavBar: React.FC = () => {
     
     const rootStore = useContext(RootStoreContext);
-    const {isLoggedIn, user} = rootStore.userStore;
+    const {user, logout} = rootStore.userStore;
     return (
         <Menu fixed='top' inverted>
             <Container>
@@ -19,10 +19,10 @@ const NavBar: React.FC = () => {
                 <Menu.Item>
                     <Button as={NavLink} to='/createActivity' positive content='Create Activity' />
                 </Menu.Item>
-                <Menu.Item as={NavLink} to='/posts' name='Posts' />
-                    <Menu.Item position={"right"}>
-                        <Button as={NavLink} to='/createPost' positive content='Create Post'/>
-                </Menu.Item>
+                {/*<Menu.Item as={NavLink} to='/posts' name='Posts' />*/}
+                {/*    <Menu.Item position={"right"}>*/}
+                {/*        <Button as={NavLink} to='/createPost' positive content='Create Post'/>*/}
+                {/*</Menu.Item>*/}
                 {user && (
                     <Menu.Item position='right'>
                         <Image avatar spaced='right' src={user.image || '/assets/user.png'} />
@@ -34,7 +34,7 @@ const NavBar: React.FC = () => {
                                     text='My profile'
                                     icon='user'
                                 />
-                                <Dropdown.Item text='Logout' icon='power' />
+                                <Dropdown.Item onClick={logout} text='Logout' icon='power' />
                             </Dropdown.Menu>
                         </Dropdown>
                     </Menu.Item>
