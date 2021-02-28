@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Container, Segment, Header, Button, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { RootStoreContext } from '../../app/stores/rootStore';
+import { useContext } from 'react';
 
 const HomePage = () => {
+    const rootStore = useContext(RootStoreContext);
+    const {isLoggedIn, user} = rootStore.userStore;
     return (
         <Segment inverted textAlign='center' vertical className='masthead'>
             <Container text>
@@ -15,10 +19,25 @@ const HomePage = () => {
                     />
                     dotReact
                 </Header>
-                <Header as='h2' inverted content='Welcome to dotReact' />
-                <Button as={Link} to='/login' size='huge' inverted>
-                    Login
-                </Button>
+                {isLoggedIn && user ? (
+                <Fragment>    
+                <Header as='h2' inverted content={`Welcome back ${user.displayName}`}/>
+                    <Button as={Link} to='/activities' size='huge' inverted>
+                    Go to activities!
+                    </Button>
+                </Fragment>   
+                ) : (
+                    <Fragment>
+                        <Header as='h2' inverted content='Welcome to dotReact' />
+                        <Button as={Link} to='/login' size='huge' inverted>
+                            Login
+                        </Button>
+                        <Button as={Link} to='/register' size='huge' inverted>
+                            Register
+                        </Button>
+                    </Fragment>
+                )}
+                
             </Container>
         </Segment>
     );

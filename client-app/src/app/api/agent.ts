@@ -3,7 +3,8 @@ import { IActivity } from '../models/activity';
 import { IPost } from '../models/post';
 import {history} from '../..';
 import {toast} from 'react-toastify';
-import { IUser, IUserFormValues } from '../models/user';
+import { IUserFormValues } from '../models/user';
+import { IUser } from '../models/user';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
@@ -64,6 +65,5 @@ const User = {
 
 export default {
     Activities,
-    Posts,
     User
 }
