@@ -11,13 +11,11 @@ configure({enforceActions: 'always'});
 export class ActivityStore  {
     
     rootStore: RootStore;
+    
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
+        makeAutoObservable(this);
     }
-    
-    // constructor() {
-    //     makeAutoObservable(this);
-    // }
     
     @observable activityRegistry = new Map();
     @observable activity: IActivity | null = null;

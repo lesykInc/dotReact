@@ -15,9 +15,9 @@ const HomePage = () => {
                     />
                     dotReact
                 </Header>
-                <Header as='h2' inverted content='Welcome to Reactivities' />
-                <Button as={Link} to='/activities' size='huge' inverted>
-                    Take me to the activities!
+                <Header as='h2' inverted content='Welcome to dotReact' />
+                <Button as={Link} to='/login' size='huge' inverted>
+                    Login
                 </Button>
             </Container>
         </Segment>
