@@ -6,6 +6,7 @@ import { RootStoreContext } from '../../app/stores/rootStore';
 
 
 import { combineValidators, isRequired } from 'revalidate';
+import { IUserFormValues } from '../models/user';
 
 const validate = combineValidators({
     email: isRequired('Email'),
@@ -13,12 +14,12 @@ const validate = combineValidators({
 });
 
 const LoginForm = () => {
-    const rootStore = useContext(RootStoreContext);
-    const { login } = rootStore.userStore;
+     const rootStore = useContext(RootStoreContext);
+     const { login } = rootStore.userStore;
     return (
         <FinalForm
-            onSubmit={(values) =>
-                console.log(values)
+            onSubmit={(values: IUserFormValues) =>
+                login(values)
             }
             render={({
                          handleSubmit

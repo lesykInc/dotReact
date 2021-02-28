@@ -3,7 +3,7 @@ import { createContext } from 'react';
 import { configure } from 'mobx';
 import { ActivityStore } from './activityStore';
 
-configure({enforceActions: 'always'});
+configure({enforceActions: 'always'});   
 
 export class RootStore {
     activityStore: ActivityStore;
