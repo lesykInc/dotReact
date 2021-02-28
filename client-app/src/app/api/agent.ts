@@ -64,5 +64,6 @@ const User = {
 
 export default {
     Activities,
-    Posts
+    Posts,
+    User
 }
