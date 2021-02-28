@@ -25,7 +25,7 @@ const RegisterForm = () => {
                     [FORM_ERROR]: error
                 }))
             }
-            // validate={validate}
+            validate={validate}
             render={({
                          handleSubmit,
                          submitting,
