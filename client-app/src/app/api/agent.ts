@@ -5,10 +5,19 @@ import {history} from '../..';
 import {toast} from 'react-toastify';
 import { IUserFormValues } from '../models/user';
 import { IUser } from '../models/user';
+import { config } from 'process';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
-axios.interceptors.request.use(undefined, error => {
+axios.interceptors.request.use((config) => {
+    const token = window.localStorage.getItem('jwt');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
+
+axios.interceptors.response.use(undefined, error => {
 
     if (error.message === 'Network Error' && !error.response) {
         toast.error('Network error - make sure API is running!')
