@@ -4,6 +4,7 @@ import { Item, Label, Segment } from 'semantic-ui-react';
 import {makeAutoObservable} from 'mobx';
 import ActivityListItem from './ActivityListItem';
 import { RootStoreContext } from '../../../app/stores/rootStore';
+import { format} from 'date-fns';
 
 const ActivityList: React.FC = () => {
     
@@ -15,7 +16,7 @@ const ActivityList: React.FC = () => {
             {activitiesByDate.map(([group, activities]) =>(
                 <Fragment key={group}>
                     <Label size='large' color='blue'>
-                        {group}
+                        {format(group, 'eeee do MMMM')}
                     </Label>
                     <Segment clearing>
                         <Item.Group divided>
