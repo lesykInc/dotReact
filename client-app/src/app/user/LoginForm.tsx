@@ -6,6 +6,7 @@ import { RootStoreContext } from '../../app/stores/rootStore';
 import { combineValidators, isRequired } from 'revalidate';
 import { IUserFormValues } from '../models/user';
 import { FORM_ERROR } from 'final-form';
+import ErrorMessage from '../common/form/ErrorMessage';
 
 const validate = combineValidators({
     email: isRequired('Email'),
@@ -28,9 +29,9 @@ const LoginForm = () => {
                          submitError,
                          invalid,
                          pristine,
-                         dirtyFieldsSinceLastSubmit
+                         dirtySinceLastSubmit
                      }) => (
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} error>
                     <Header as={'h2'} content={'Login to dotReact'} color={"teal"} textAlign={"center"}  />
                     <Field name='email' component={TextInput} placeholder='Email' />
                     <Field
@@ -39,10 +40,10 @@ const LoginForm = () => {
                         placeholder='Password'
                         type='password'
                     />
-                    {submitError && !dirtyFieldsSinceLastSubmit &&
-                    (<Label color="red" basic content={submitError.statusText} />)}
+                    {submitError && !dirtySinceLastSubmit &&
+                    (<ErrorMessage error={submitError} text={'Invalid email or passsword'} />)}
                     <Button
-                        disabled={(invalid || !dirtyFieldsSinceLastSubmit) || pristine}
+                        disabled={(invalid || !dirtySinceLastSubmit) || pristine}
                         loading={submitting}
                         color={"teal"}
                         content='Login'
