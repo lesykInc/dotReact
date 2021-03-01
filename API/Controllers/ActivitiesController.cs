@@ -10,10 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+
+    [AllowAnonymous]
     public class ActivitiesController : BaseController
     {
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Activity>>> List()
         {
             return await Mediator.Send(new List.Query());
@@ -27,12 +30,14 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Unit>> Create(Create.Command command)
         {
             return await Mediator.Send(command);
         }
 
         [HttpPut("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Unit>> Edit(Guid id, Edit.Command command)
         {
             command.Id = id;
@@ -40,6 +45,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Unit>> Delete(Guid id)
         {
             return await Mediator.Send(new Delete.Command {Id = id});
