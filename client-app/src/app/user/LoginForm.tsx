@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {Fragment, useContext } from 'react';
 import { Form as FinalForm, Field } from 'react-final-form';
 import { Form, Button, Header, Label } from 'semantic-ui-react';
 import TextInput from '../../app/common/form/TextInput';
@@ -21,7 +21,8 @@ const LoginForm = () => {
             onSubmit={(values: IUserFormValues) =>
                 login(values).catch(error => ({
                     [FORM_ERROR]: error
-                }))}
+                }))
+            }
             validate={validate}
             render={({
                          handleSubmit,
@@ -32,7 +33,12 @@ const LoginForm = () => {
                          dirtySinceLastSubmit
                      }) => (
                 <Form onSubmit={handleSubmit} error>
-                    <Header as={'h2'} content={'Login to dotReact'} color={"teal"} textAlign={"center"}  />
+                    <Header
+                        as='h2'
+                        content='Login to Reactivities'
+                        color='teal'
+                        textAlign='center'
+                    />
                     <Field name='email' component={TextInput} placeholder='Email' />
                     <Field
                         name='password'
@@ -40,12 +46,16 @@ const LoginForm = () => {
                         placeholder='Password'
                         type='password'
                     />
-                    {submitError && !dirtySinceLastSubmit &&
-                    (<ErrorMessage error={submitError} text={'Invalid email or passsword'} />)}
+                    {submitError && !dirtySinceLastSubmit && (
+                        <ErrorMessage
+                            error={submitError}
+                            text='Invalid email or password'
+                        />
+                    )}
                     <Button
-                        disabled={(invalid || !dirtySinceLastSubmit) || pristine}
+                        disabled={(invalid && !dirtySinceLastSubmit) || pristine}
                         loading={submitting}
-                        color={"teal"}
+                        color='teal'
                         content='Login'
                         fluid
                     />

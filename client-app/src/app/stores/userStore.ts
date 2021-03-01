@@ -1,4 +1,4 @@
-import { observable, computed, action, runInAction } from 'mobx';
+import { observable, computed, action, runInAction, makeAutoObservable } from 'mobx';
 import { IUser, IUserFormValues } from '../models/user';
 import agent from '../api/agent';
 import { RootStore } from './rootStore';
@@ -8,16 +8,17 @@ export default class UserStore {
     
     rootStore: RootStore;
     constructor(rootStore: RootStore) {
+        makeAutoObservable(this);
         this.rootStore = rootStore;
     }
 
-    @observable user: IUser | null = null;
+    user: IUser | null = null;
 
-    @computed get isLoggedIn() {
+    get isLoggedIn() {
         return !!this.user;
     }
 
-    @action login = async (values: IUserFormValues) => {
+    login = async (values: IUserFormValues) => {
         try {
             const user = await agent.User.login(values);
             runInAction(() => {
@@ -30,8 +31,8 @@ export default class UserStore {
             throw error;
         }
     };
-
-    @action register = async (values: IUserFormValues) => {
+    
+    register = async (values: IUserFormValues) => {
         try {
             const user = await agent.User.register(values);
             this.rootStore.commonStore.setToken(user.token);
@@ -42,7 +43,7 @@ export default class UserStore {
         }
     }
 
-    @action getUser = async () => {
+     getUser = async () => {
         try {
             const user = await agent.User.current();
             runInAction(() => {
@@ -53,7 +54,7 @@ export default class UserStore {
         }
     };
     
-    @action logout = () => {
+    logout = () => {
         this.rootStore.commonStore.setToken(null);
         this.user = null;
         history.push('/');

@@ -1,9 +1,10 @@
 import { RootStore } from "./rootStore";
-import { observable, action } from "mobx";
+import { observable, action, makeAutoObservable } from "mobx";
 
 export default class ModalStore {
     rootStore: RootStore;
     constructor(rootStore: RootStore) {
+        makeAutoObservable(this);
         this.rootStore = rootStore;
     }
 
@@ -12,12 +13,12 @@ export default class ModalStore {
         body: null
     }
 
-    @action openModal = (content: any) => {
+    openModal = (content: any) => {
         this.modal.open = true;
         this.modal.body = content;
     }
-
-    @action closeModal = () => {
+    
+    closeModal = () => {
         this.modal.open = false;
         this.modal.body = null;
     }
