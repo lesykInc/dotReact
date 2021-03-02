@@ -1,92 +1,45 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
+using Application.Core;
 using Domain;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Activities
 {
     public class Create
-    {   
-        // I'm not actually going to return an activity entity from this command
-        public class Command : IRequest
+    {
+        public class Command : IRequest<Result<Unit>>
         {
-            public Guid Id { get; set; }
-
-            public string Title { get; set; }
-        
-            public string Description { get; set; }
-        
-            public string Category { get; set; }
-        
-            public DateTime Date{ get; set; }
-        
-            public string City { get; set; }
-        
-            public string Venue { get; set; }
+            public Activity Activity { get; set; }
         }
-        
-        public class CommandValidator: AbstractValidator<Command>
+
+        public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Title).NotEmpty();
-                RuleFor(x => x.Description).NotEmpty();
-                RuleFor(x => x.Category).NotEmpty();
-                RuleFor(x => x.Date).NotEmpty();
-                RuleFor(x => x.City).NotEmpty();
-                RuleFor(x => x.Venue).NotEmpty();
+                RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
             }
         }
-        
-        public class Handler : IRequestHandler<Command>
+
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
-            private readonly IUserAccessor _userAccessor;
-            public Handler(DataContext context, IUserAccessor userAccessor)
+            public Handler(DataContext context)
             {
                 _context = context;
-                _userAccessor = userAccessor;
             }
-            // in this case Unit like an empty object
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = new Activity
-                {
-                    Id = request.Id,
-                    Title = request.Title,
-                    Description = request.Description,
-                    Category = request.Category,
-                    Date = request.Date,
-                    City = request.City,
-                    Venue = request.Venue
-                };
-                
-                //add activity to this context
-                _context.Activities.Add(activity);
+                _context.Activities.Add(request.Activity);
 
-                var user = await _context.Users.SingleOrDefaultAsync(x => 
-                    x.UserName == _userAccessor.GetCurrentUsername());
+                var result = await _context.SaveChangesAsync() > 0;
 
-                var attendee = new UserActivity
-                {
-                    AppUser = user,
-                    Activity = activity,
-                    IsHost = true,
-                    DateJoined = DateTime.Now
-                };
+                if (!result) return Result<Unit>.Failure("Failed to create activity");
 
-                _context.UserActivities.Add(attendee);
-                
-                // if SaveChanges = 0 then nothing's been saved to db
-                var success = await _context.SaveChangesAsync() > 0;
-                if(success) return Unit.Value;
-
-                throw new Exception("Problem saving changes");
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }
