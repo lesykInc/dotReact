@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutoMapper;
+using Application.Profiles;
 
 namespace Application.Activities
 {
