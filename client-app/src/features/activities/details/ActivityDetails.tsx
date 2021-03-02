@@ -1,52 +1,35 @@
 import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom';
-import { Card, Image, Button } from 'semantic-ui-react'
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
-import ActivityStore from '../../../app/stores/activityStore'
+import { useStore } from '../../../app/stores/store';
+import ActivityDetailedChat from './ActivityDetailedChat';
+import ActivityDetailedInfo from './ActivityDetailedInfo';
+import ActivityDetailedSidebar from './ActivityDetailedSidebar';
+import ActivityDetailedHeader from './ActivityDetaledHeader';
 
-interface DetailsParams {
-    id: string;
-}
+export default observer(function ActivityDetails() {
+    const {activityStore} = useStore();
+    const {selectedActivity: activity, loadActivity, loadingInitial} = activityStore;
+    const {id} = useParams<{id: string}>();
 
-const ActivityDetails: React.FC<RouteComponentProps<DetailsParams>> = ({match}) => {
-    
-    const activityStore = useContext(ActivityStore);
-    const {activity, openEditForm, cancelSelectedActivity, loadActivity, loadingInitial} = activityStore;
-    
     useEffect(() => {
-        loadActivity(match.params.id)    
-    }, [loadActivity]
-    )
-    
-    if (loadingInitial || !activity) return <LoadingComponent content='Loading activity...' />
-    
-    return (
-        <Card fluid>
-            <Image src={`../assets/categoryImages/${activity!.category}.jpg`} wrapped ui={false} />
-            <Card.Content>
-                <Card.Header>{activity!.title}</Card.Header>
-                <Card.Meta>
-                    <span>{activity!.date}</span>
-                </Card.Meta>
-                <Card.Description>
-                    {activity!.description}
-                </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-                <Button.Group widths={2}>
-                    <Button onClick={() => openEditForm(activity!.id)} 
-                            basic 
-                            color='blue' 
-                            content='Edit'/>
-                    <Button onClick={() => window.history.back} 
-                            basic
-                            color='grey'
-                            content='Cancel'/>
-                </Button.Group>    
-            </Card.Content>
-        </Card>
-    )
-}
+        if (id) loadActivity(id);
+    }, [id, loadActivity]);
 
-export default observer(ActivityDetails)
+    if (loadingInitial || !activity) return <LoadingComponent />;
+
+    return (
+        <Grid>
+            <Grid.Column width={10}>
+                <ActivityDetailedHeader activity={activity} />
+                <ActivityDetailedInfo activity={activity} />
+                <ActivityDetailedChat />
+            </Grid.Column>
+            <Grid.Column width={6}>
+                <ActivityDetailedSidebar />
+            </Grid.Column>
+        </Grid>
+    )
+})

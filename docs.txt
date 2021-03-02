@@ -1,0 +1,48 @@
+
+EF:
+>dotnet tool install --global dotnet-ef
+
+
+
+React Router:
+https://reactrouter.com/
+>npm install react-router-dom
+>npm install @types/react-router-dom --save-dev
+
+Notification
+>npm install react-toastify
+For json
+Newtonsoft.Json (nuget) to API
+
+For Form
+>npm install react-final-form final-form
+
+React widjects for date
++ need dat-fns
+>npm install react-widgets react-widgets-date-fns
+>npm install react-widgets@4.4.11 react-widgets-date-fns@4.0.26 date-fns@2.0.0-alpha.13
+>npm i --save-dev @types/react-widgets
+
+client-side-validation -> revalidate
+>npm install revalidate
+>npm i --save-dev @types/revalidate
+
+# 5.0.2
+Identity
+Microsoft.AspNetCore.Identity.EntityFrameworkCore  -> Domain
+*dotnet ef migrations add "AddedIdentity" -p Persistence/ -s API/
+AspNetCore.Identity.UI -> API
+
+
+#create new project for implements JWT
+dotnet new classlib -n Infrastructure
+dotnet sln add Infrastructure/  
+C:\Users\lesyk\RiderProjects\dotReact\Infrastructure>dotnet add reference ../Application/
+System.IdentityModel.Tokens.Jwt 5.5.0 -> Infrastructure
+# fixed bug? 5.0.2 (like runtime)
+Microsoft.AspNetCore.Authentication.JwtBearer -> API
+
+dotnet user-secrets init -p API/
+or
+dotnet user-secrets set "TokenKey" "super secret key"
+ 

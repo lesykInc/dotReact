@@ -1,9 +1,9 @@
-export interface IActivity {
+export interface Activity {
     id: string;
     title: string;
+    date: Date | null;
     description: string;
     category: string;
-    date: string;
     city: string;
     venue: string;
-}
+  }
