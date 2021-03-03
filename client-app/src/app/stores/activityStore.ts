@@ -139,4 +139,28 @@ export default class ActivityStore {
             })
         }
     }
+
+    updateAttendance = async () => {
+        const user = store.userStore.user;
+        this.loading = true;
+        try {
+            await agent.Activities.attend(this.selectedActivity!.id);
+            runInAction(() => { 
+                if (this.selectedActivity?.isGoing) {
+                    this.selectedActivity.attendees =
+                        this.selectedActivity.attendees?.filter(a => a.username !== user?.username);
+                    this.selectedActivity.isGoing = false;
+                } else {
+                    const attendee = new Profile(user!);
+                    this.selectedActivity?.attendees?.push(attendee);
+                    this.selectedActivity!.isGoing = true;
+                }
+                this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!)
+            })
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => this.loading = false);
+        }
+    }
 }
