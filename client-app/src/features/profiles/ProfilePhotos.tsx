@@ -1,6 +1,7 @@
 ﻿import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import {Card, Header, Tab, Image, Grid, Button } from 'semantic-ui-react';
+import PhotoUploadWidget from '../../app/common/imageUpload/PhotoUploadWidget';
 import { Profile } from '../../app/models/profile';
 import { useStore } from '../../app/stores/store';
 
@@ -26,7 +27,7 @@ export default observer(function ProfilePhotos({profile}: Props) {
                 </Grid.Column>
                 <Grid.Column width={16}>
                     {addPhotoMode ? (
-                        <p>Photo widgets go here</p>
+                        <PhotoUploadWidget />
                     ) : (
                         <Card.Group itemsPerRow={5}>
                             {profile.photos?.map(photo => (
