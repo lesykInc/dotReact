@@ -8,9 +8,9 @@ export default observer(function ProfilePage() {
    
     return (
         <Grid>
-            <Grid.Column width={16}>    
+            <Grid.Column width={16}>
                 <ProfileHeader />
-                <ProfileContent  />
+                <ProfileContent />
             </Grid.Column>
         </Grid>
     )
