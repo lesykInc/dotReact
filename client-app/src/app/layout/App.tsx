@@ -30,7 +30,7 @@ function App() {
   }, [commonStore, userStore])
 
   if (!commonStore.appLoaded) return <LoadingComponent content='Loading app...' />
-
+  
   return (
     <>
       <ToastContainer position='bottom-right' hideProgressBar />

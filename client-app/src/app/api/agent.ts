@@ -101,7 +101,8 @@ const Profiles = {
     listFollowings: (username: string, predicate: string) =>   
         requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
     listActivities: (username: string, predicate: string) =>
-        requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`)
+        requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`),
+    updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile)
 }
 
 const agent = {
