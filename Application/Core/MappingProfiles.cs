@@ -1,6 +1,7 @@
 using System.Linq;
 using Application.Activities;
 using Application.Comments;
+using Application.Posts;
 using Application.Profiles;
 using Domain;
 
@@ -41,6 +42,8 @@ namespace Application.Core
                 .ForMember(d => d.Category, o => o.MapFrom(s => s.Activity.Category))
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s => 
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
+            CreateMap<Post, Post>();
+            CreateMap<Post, PostDto>();
         }
     }
 }

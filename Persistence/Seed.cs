@@ -139,12 +139,12 @@ namespace Persistence
                             new ActivityAttendee
                             {
                                 AppUser = users[1],
-                                IsHost = true                            
+                                IsHost = true
                             },
                             new ActivityAttendee
                             {
                                 AppUser = users[0],
-                                IsHost = false                            
+                                IsHost = false
                             },
                         }
                     },
@@ -161,7 +161,7 @@ namespace Persistence
                             new ActivityAttendee
                             {
                                 AppUser = users[1],
-                                IsHost = true                            
+                                IsHost = true
                             }
                         }
                     },
@@ -178,12 +178,12 @@ namespace Persistence
                             new ActivityAttendee
                             {
                                 AppUser = users[0],
-                                IsHost = true                            
+                                IsHost = true
                             },
                             new ActivityAttendee
                             {
                                 AppUser = users[1],
-                                IsHost = false                            
+                                IsHost = false
                             },
                         }
                     },
@@ -200,12 +200,12 @@ namespace Persistence
                             new ActivityAttendee
                             {
                                 AppUser = users[2],
-                                IsHost = true                            
+                                IsHost = true
                             },
                             new ActivityAttendee
                             {
                                 AppUser = users[1],
-                                IsHost = false                            
+                                IsHost = false
                             },
                         }
                     },
@@ -222,12 +222,12 @@ namespace Persistence
                             new ActivityAttendee
                             {
                                 AppUser = users[0],
-                                IsHost = true                            
+                                IsHost = true
                             },
                             new ActivityAttendee
                             {
                                 AppUser = users[2],
-                                IsHost = false                            
+                                IsHost = false
                             },
                         }
                     },
@@ -244,19 +244,52 @@ namespace Persistence
                             new ActivityAttendee
                             {
                                 AppUser = users[2],
-                                IsHost = true                            
+                                IsHost = true
                             },
                             new ActivityAttendee
                             {
                                 AppUser = users[1],
-                                IsHost = false                            
+                                IsHost = false
                             },
                         }
                     }
                 };
 
-                await context.Activities.AddRangeAsync(activities);
-                await context.SaveChangesAsync();
+                if (!context.Posts.Any())
+                {
+                    var posts = new List<Post>
+                    {
+                        new Post
+                        {
+                            Title = "Post #1",
+                            Date = DateTime.Now.AddMonths(8),
+                            Content = "Post #1, Post #1, Post #1, Post #1, Post #1, Post #1"
+                        },
+                        new Post
+                        {
+                            Title = "Post #2",
+                            Date = DateTime.Now.AddMonths(8),
+                            Content = "Post #1, Post #1, Post #1, Post #1, Post #1, Post #1"
+                        },
+                        new Post
+                        {
+                            Title = "Post #3",
+                            Date = DateTime.Now.AddMonths(8),
+                            Content = "Post #1, Post #1, Post #1, Post #1, Post #1, Post #1"
+                        },
+                        new Post
+                        {
+                            Title = "Post #4",
+                            Date = DateTime.Now.AddMonths(8),
+                            Content = "Post #1, Post #1, Post #1, Post #1, Post #1, Post #1"
+                        }
+                    };
+
+
+                    await context.Activities.AddRangeAsync(activities);
+                    await context.Posts.AddRangeAsync(posts);
+                    await context.SaveChangesAsync();
+                }
             }
         }
     }

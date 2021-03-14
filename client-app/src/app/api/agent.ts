@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { history } from '../..';
 import { Activity, ActivityFormValues } from '../models/activity';
 import { PaginatedResult } from '../models/pagination';
+import {Post, PostFormValues } from '../models/post';
 import {Photo, Profile, UserActivity } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
@@ -105,10 +106,19 @@ const Profiles = {
     updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile)
 }
 
+const Posts = {
+    list: (params: URLSearchParams) => axios.get<Post[]>('/posts').then(responseBody),
+    details: (id: string) => requests.get<Post>(`/posts/${id}`),
+    create: (post: PostFormValues) => requests.post<void>('/posts', post),
+    update: (post: PostFormValues) => requests.put<void>(`/posts/${post.id}`, post),
+    delete: (id: string) => requests.del<void>(`/posts/${id}`)
+}
+
 const agent = {
     Activities,
     Account,
-    Profiles
+    Profiles,
+    Posts
 }
 
 export default agent;

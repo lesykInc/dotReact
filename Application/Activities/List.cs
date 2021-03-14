@@ -10,7 +10,7 @@ using Persistence;
 
 namespace Application.Activities
 {
-    public class List
+    public class    List
     {
         public class Query : IRequest<Result<PagedList<ActivityDto>>>
         {

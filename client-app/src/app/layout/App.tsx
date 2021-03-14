@@ -16,6 +16,8 @@ import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
 import ProfilePage from '../../features/profiles/ProfilePage';
 import PrivateRoute from './PrivateRoute';
+import PostDashboard from '../../features/posts/dashboard/PostDashboard';
+import PostForm from '../../features/posts/form/PostForm';
 
 function App() {
   const location = useLocation();
@@ -44,8 +46,10 @@ function App() {
             <Container style={{ marginTop: '7em' }}>
               <Switch>
                 <PrivateRoute exact path='/activities' component={ActivityDashboard} />
+                <PrivateRoute exact path='/posts' component={PostDashboard} />
                 <PrivateRoute path='/activities/:id' component={ActivityDetails} />
                 <PrivateRoute key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
+                <PrivateRoute key={location.key} path={['/createPost', '/manage/:id']} component={PostForm} />
                 <PrivateRoute path='/profiles/:username' component={ProfilePage} />
                 <PrivateRoute path='/errors' component={TestErrors} />
                 <Route path='/server-error' component={ServerError} />
