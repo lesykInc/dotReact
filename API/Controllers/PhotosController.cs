@@ -23,5 +23,7 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new SetMain.Command{Id = id}));
         }
+        
+        
     }
 }
