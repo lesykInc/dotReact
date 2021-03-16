@@ -31,3 +31,9 @@ export interface UserActivity {
     category: string;
     date: Date;
 }
+
+export interface Post {
+    id: string;
+    title: string;
+    content: string;
+}

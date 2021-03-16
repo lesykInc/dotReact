@@ -15,7 +15,10 @@ namespace Application.Posts
 {
     public class List
     {
-        public class Query : IRequest<Result<List<PostDto>>> { }
+        public class Query : IRequest<Result<List<PostDto>>>
+        {
+            public PostParams Params { get; set; }
+        }
 
         public class Handler : IRequestHandler<Query, Result<List<PostDto>>>
         {

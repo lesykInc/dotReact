@@ -17,19 +17,22 @@ export default observer(function HomePage() {
                 </Header>
                 {userStore.isLoggedIn ? (
                     <>
-                        <Header as='h2' inverted content='Welcome to Reactivities' />
+                        <Header as='h2' inverted content='Welcome to dotReact' />
                         <Button as={Link} to='/activities' size='huge' inverted>
                             Go to Activities!
+                        </Button>
+                        <Button as={Link} to='/posts' size='huge' inverted>
+                            Go to Posts!
                         </Button>
                     </>
 
                 ) : (
                         <>
                             <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted>
-                                Login!
+                                Login
                         </Button>
                             <Button onClick={() => modalStore.openModal(<RegisterForm />)} size='huge' inverted>
-                                Register!
+                                Register
                         </Button>
                         </>
 

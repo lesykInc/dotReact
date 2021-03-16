@@ -16,7 +16,12 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
-
+    
+        // [HttpGet]
+        // public async Task<IActionResult> GetPosts([FromQuery]PostParams param)
+        // {
+        //     return HandleResult(await Mediator.Send(new List.Query{Params = param}));
+        // }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost(Guid id)
