@@ -5,7 +5,8 @@ namespace Application.Posts
 {
     public class PostParams : PagingParams
     {
-        public bool IsAuthorType { get; set; }
+        public bool IsAuthor { get; set; }
         public DateTime StartDate { get; set; } = DateTime.UtcNow;
+
     }
 }

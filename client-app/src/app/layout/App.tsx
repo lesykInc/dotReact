@@ -47,7 +47,7 @@ function App() {
             <Container style={{ marginTop: '7em' }}>
               <Switch>
                 <PrivateRoute exact path='/activities' component={ActivityDashboard} />
-                  <PrivateRoute exact path='/posts' component={PostDashboard} />
+                <PrivateRoute exact path='/posts' component={PostDashboard} />
                 <PrivateRoute path='/activities/:id' component={ActivityDetails} />
                 <PrivateRoute path='/posts/:id' component={PostDetails} />
                 <PrivateRoute key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />

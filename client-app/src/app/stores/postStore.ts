@@ -22,7 +22,7 @@ export default class PostStore {
 
     get postsByDate() {
         return Array.from(this.postRegistry.values()).sort((a, b) =>
-            a.date!.getTime() - b.date!.getTime());
+            b.date!.getTime() - a.date!.getTime());
     }
 
     get groupedPosts() {
@@ -62,6 +62,10 @@ export default class PostStore {
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
+    }
+
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams;
     }
 
     get axiosParams() {

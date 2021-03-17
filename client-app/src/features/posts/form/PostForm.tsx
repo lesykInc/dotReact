@@ -15,7 +15,13 @@ import MyDateInput from '../../../app/common/form/MyDateInput';
 import { PostFormValues } from '../../../app/models/post';
 import JoditEditor from 'jodit-react';
 import { useRef } from 'react';
-import MyTextAreaEditor from '../../../app/common/form/MyTextAreaEditor';
+// import Editor from '../../../app/common/form/Editor';
+// @ts-ignore
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+// @ts-ignore
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Editor from '../../../app/common/form/Editor';
+
 
 export default observer(function PostForm() {
     const history = useHistory();
@@ -24,6 +30,7 @@ export default observer(function PostForm() {
     const { id } = useParams<{ id: string }>();
 
     const [post, setPost] = useState<PostFormValues>(new PostFormValues());
+    const [text, setText] = useState(post);
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The post title is required'),
@@ -46,13 +53,7 @@ export default observer(function PostForm() {
             updatePost(post).then(() => history.push(`/posts/${post.id}`))
         }
     }
-
-    const editor = useRef(null)
-    const [content, setContent] = useState('')
-
-    const config = {
-        readonly: false // all options from https://xdsoft.net/jodit/doc/
-    }
+    
 
     if (loadingInitial) return <LoadingComponent content='Loading post...' />
 
@@ -69,10 +70,7 @@ export default observer(function PostForm() {
                         <MyTextInput name='title' placeholder='Title' />
                         <MyTextArea rows={6} placeholder='Content' name='content' />
                         
-                        {/*<JoditEditor value={post.content}/>*/}
-                        
-                        {/*<MyTextAreaEditor rows={3} name={'content'} placeholder={'Content'} />*/}
-                        
+        
                         <MyDateInput
                             placeholderText='Date'
                             name='date'

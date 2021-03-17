@@ -1,7 +1,10 @@
 import { useField } from 'formik';
 import React from 'react';
 import { Form, Label } from 'semantic-ui-react';
-
+// @ts-ignore
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+// @ts-ignore
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 interface Props {
     placeholder: string;
