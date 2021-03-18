@@ -46,3 +46,34 @@ dotnet user-secrets init -p API/
 or
 dotnet user-secrets set "TokenKey" "super secret key"
  
+
+
+
+
+
+
+
+
+
+
+
+
+1231445
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

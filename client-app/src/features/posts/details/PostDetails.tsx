@@ -20,7 +20,7 @@ export default observer(function PostDetails() {
 
     return (
         <Grid>
-            <Grid.Column>
+            <Grid.Column width={12}>
                 <PostDetailInfo post={post}/>
             </Grid.Column>
         </Grid>

@@ -1,4 +1,5 @@
-﻿// using System.Collections.Generic;
+﻿// using System;
+// using System.Collections.Generic;
 // using System.Linq;
 // using System.Threading;
 // using System.Threading.Tasks;
@@ -16,6 +17,7 @@
 //         public class Query : IRequest<Result<List<UserPostDto>>>
 //         {
 //             public string Username { get; set; }
+//             public string Predicate { get; set; }
 //         }
 //
 //         public class Handler : IRequestHandler<Query, Result<List<UserPostDto>>>
@@ -28,6 +30,7 @@
 //                 _context = context;
 //             }
 //
+//             // EF dependence
 //             public async Task<Result<List<UserPostDto>>> Handle(Query request, CancellationToken cancellationToken)
 //             {
 //                 var query = _context.Posts
@@ -36,12 +39,12 @@
 //                     .ProjectTo<UserPostDto>(_mapper.ConfigurationProvider)
 //                     .AsQueryable();
 //                 
-//                 // query = request.Predicate switch
-//                 // {
-//                 //     "past" => query.Where(a => a.Date <= DateTime.Now),
-//                 //     "hosting" => query.Where(a => a.HostUsername == request.Username),
-//                 //     _ => query.Where(a => a.Date >= DateTime.Now)
-//                 // };
+//                 query = request.Predicate switch
+//                 {
+//                     "past" => query.Where(a => a.Date <= DateTime.Now),
+//                     "hosting" => query.Where(a => a.AuthorUsername == request.Username),
+//                     _ => query.Where(a => a.Date >= DateTime.Now)
+//                 };
 //
 //                 var posts = await query.ToListAsync();
 //

@@ -44,6 +44,8 @@ namespace Application.Core
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
             CreateMap<Post, Post>();
             CreateMap<Post, PostDto>();
+            // .ForMember(d => d.AuthorUsername, o => o.MapFrom(s => s.Post
+            //     .FirstOrDefault(x => x.isAuthor).AppUser.UserName));
         }
     }
 }

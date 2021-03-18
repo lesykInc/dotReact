@@ -1,8 +1,13 @@
-﻿export interface Post {
+﻿import { Profile } from "./profile";
+
+export interface Post {
     id: string;
     title: string;
     date: Date | null;
     content: string;
+    authorUserName: string;
+    isAuthor: boolean;
+    host?: Profile;
 }
 
 export class Post implements Post {

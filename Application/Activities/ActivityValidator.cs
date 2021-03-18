@@ -5,7 +5,7 @@ namespace Application.Activities
 {
     public class ActivityValidator : AbstractValidator<Activity>
     {
-        public ActivityValidator()
+        public ActivityValidator()  
         {
             RuleFor(x => x.Title).NotEmpty();
             RuleFor(x => x.Description).NotEmpty();

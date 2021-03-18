@@ -1,6 +1,6 @@
 ﻿import {Post, PostFormValues} from "../models/post";
 import {Pagination, PagingParams} from "../models/pagination";
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable, reaction, runInAction} from "mobx";
 import agent from "../api/agent";
 import {store} from "./store";
 import {format} from "date-fns";
@@ -14,10 +14,37 @@ export default class PostStore {
     loadingInitial = false;
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
-    predicate = new Map().set('all', true);
+    predicate = new Map().set('all', false);
 
     constructor() {
         makeAutoObservable(this);
+
+        reaction(
+            () => this.predicate.keys(),
+            () => {
+                this.pagingParams = new PagingParams();
+                this.postRegistry.clear();
+                this.loadPosts();
+            }
+        )
+    }
+
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams;
+    }
+
+    get axiosParams() {
+        const params = new URLSearchParams();
+        params.append('pageNumber', this.pagingParams.pageNumber.toString());
+        params.append('pageSize', this.pagingParams.pageSize.toString());
+        this.predicate.forEach((value, key) => {
+            if (key === 'startDate') {
+                params.append(key, (value as Date).toISOString())
+            } else {
+                params.append(key, value);
+            }
+        })
+        return params;
     }
 
     get postsByDate() {
@@ -38,11 +65,11 @@ export default class PostStore {
     loadPosts = async () => {
         this.loadingInitial = true;
         try {
-            const result = await agent.Posts.list();
+            const result = await agent.Posts.list(this.axiosParams);
             result.data.forEach(post => {
                 this.setPost(post);
             })
-            // this.setPagination(result.pagination)
+            this.setPagination(result.pagination)
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
@@ -50,36 +77,8 @@ export default class PostStore {
         }
     }
 
-    private setPost = (post: Post) => {
-        const user = store.userStore.user;
-        post.date = new Date(post.date!);
-        this.postRegistry.set(post.id, post);
-    }
-
-    private getPost = (id: string) => {
-        return this.postRegistry.get(id);
-    }
-
-    setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-    setPagingParams = (pagingParams: PagingParams) => {
-        this.pagingParams = pagingParams;
-    }
-
-    get axiosParams() {
-        const params = new URLSearchParams();
-        params.append('pageNumber', this.pagingParams.pageNumber.toString());
-        params.append('pageSize', this.pagingParams.pageSize.toString());
-        this.predicate.forEach((value, key) => {
-            if (key === 'startDate') {
-                params.append(key, (value as Date).toISOString())
-            } else {
-                params.append(key, value);
-            }
-        })
-        return params;
+    setPagination = (pagination: Pagination) => {
+        this.pagination = pagination;
     }
 
     loadPost = async (id: string) => {
@@ -104,11 +103,30 @@ export default class PostStore {
         }
     }
 
+    private setPost = (post: Post) => {
+        const user = store.userStore.user;
+        if (user) {
+            post.isAuthor = post.authorUserName === user.username;
+            // post.host = post.attendees?.find(x => x.username === post.hostUsername);
+        }
+        post.date = new Date(post.date!);
+        this.postRegistry.set(post.id, post);
+    }
+
+    private getPost = (id: string) => {
+        return this.postRegistry.get(id);
+    }
+
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
+    }
+
     createPost = async (post: PostFormValues) => {
         const user = store.userStore.user;
         try {
             await agent.Posts.create(post);
             const newPost = new Post(post);
+            newPost.authorUserName = user!.username;
             this.setPost(newPost);
             runInAction(() => {
                 this.selectedPost = newPost;

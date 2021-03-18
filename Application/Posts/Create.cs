@@ -16,7 +16,15 @@ namespace Application.Posts
         {
             public Post Post { get; set; }
         }
-
+        
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Post).SetValidator(new PostValidator());
+            }
+        }
+        
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
@@ -25,14 +33,6 @@ namespace Application.Posts
             {
                 _context = context;
                 _userAccessor = userAccessor;
-            }
-
-            public class CommandValidator : AbstractValidator<Command>
-            {
-                public CommandValidator()
-                {
-                    RuleFor(x => x.Post).SetValidator(new PostValidator());
-                }
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)

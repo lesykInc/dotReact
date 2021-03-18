@@ -15,13 +15,13 @@ export default observer(function NavBar() {
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/activities' name='Activities' />
                 <Menu.Item as={NavLink} to='/posts' name='Posts' />
-                <Menu.Item as={NavLink} to='/errors' name='Errors' />
-                <Menu.Item>
-                    <Button as={NavLink} to='/createActivity' positive content='Create Activity' />
-                </Menu.Item>
-                <Menu.Item>
-                    <Button as={NavLink} to='/createPost' positive content='Create Post' />
-                </Menu.Item>
+                {/*<Menu.Item as={NavLink} to='/errors' name='Errors' />*/}
+                {/*<Menu.Item>*/}
+                {/*    <Button as={NavLink} to='/createActivity' positive content='Create Activity' />*/}
+                {/*</Menu.Item>*/}
+                {/*<Menu.Item>*/}
+                {/*    <Button as={NavLink} to='/createPost' positive content='Create Post' />*/}
+                {/*</Menu.Item>*/}
                 <Menu.Item position='right'>
                     <Image src={user?.image || '/assets/user.png'} avatar spaced='right' />
                     <Dropdown pointing='top left' text={user?.displayName}>

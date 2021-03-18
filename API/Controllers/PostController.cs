@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Posts;
 using Domain;
@@ -12,16 +11,10 @@ namespace API.Controllers
     public class PostsController : BaseApiController
     {
         [HttpGet]
-        public async Task<IActionResult> GetPosts()
+        public async Task<IActionResult> GetPosts([FromQuery]PostParams param)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePagedResult(await Mediator.Send(new List.Query{Params = param}));
         }
-    
-        // [HttpGet]
-        // public async Task<IActionResult> GetPosts([FromQuery]PostParams param)
-        // {
-        //     return HandleResult(await Mediator.Send(new List.Query{Params = param}));
-        // }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost(Guid id)
@@ -35,7 +28,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Create.Command {Post = post}));
         }
 
-        // [Authorize(Policy = "IsActivityHost")]
+        // [Authorize(Policy = "IsPostHost")]
         [HttpPut("{id}")]
         public async Task<IActionResult> EditPost(Guid id, Post post)
         {
@@ -43,7 +36,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Edit.Command {Post = post}));
         }
 
-        // [Authorize(Policy = "IsActivityHost")]
+        // [Authorize(Policy = "IsPostHost")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(Guid id)
         {

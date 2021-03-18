@@ -7,7 +7,7 @@ import PostListItem from './PostListItem';
 
 
 export default observer(function PostList() {
-    const {postStore, profileStore} = useStore();
+    const {postStore} = useStore();
     const {groupedPosts} = postStore;
 
     return (

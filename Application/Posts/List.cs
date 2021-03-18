@@ -6,37 +6,48 @@ using Application.Core;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Posts
 {
     public class List
     {
-        public class Query : IRequest<Result<List<PostDto>>>
+        public class Query : IRequest<Result<PagedList<PostDto>>>
         {
             public PostParams Params { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<PostDto>>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<PostDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
                 _mapper = mapper;
                 _context = context;
+                _userAccessor = userAccessor;
             }
 
-            public async Task<Result<List<PostDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<PostDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var posts = await _context.Posts
-                    .ProjectTo<PostDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                var query = _context.Posts
+                    .Where(d => d.Date >= request.Params.StartDate)   
+                    .OrderBy(d => d.Date)
+                    .ProjectTo<PostDto>(_mapper.ConfigurationProvider,
+                        new {currentUsername = _userAccessor.GetUsername()})
+                    .AsQueryable();
 
-                return Result<List<PostDto>>.Success(posts);
+                if (request.Params.IsAuthor)
+                {
+                    query = query.Where(x => x.AuthorUsername == _userAccessor.GetUsername());
+                }
+
+                    return Result<PagedList<PostDto>>.Success(
+                    await PagedList<PostDto>.CreateAsync(query, request.Params.PageNumber,
+                        request.Params.PageSize)
+                );
             }
         }
     }

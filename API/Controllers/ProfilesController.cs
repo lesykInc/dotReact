@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Application.Profiles;
+using FluentValidation.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -20,10 +21,10 @@ namespace API.Controllers
         }
         
         // [HttpGet("{username}/posts")]
-        // public async Task<IActionResult> GetUserPosts(string username)
+        // public async Task<IActionResult> GetUserPosts(string username, string predicate)
         // {
         //     return HandleResult(await Mediator.Send(new ListPosts.Query
-        //         { Username = username}));
+        //         { Username = username, Predicate = predicate}));
         // }
         
         [HttpPut]

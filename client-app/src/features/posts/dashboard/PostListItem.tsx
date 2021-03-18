@@ -43,8 +43,8 @@ export default observer(function PostListItem({ post }: Props ) {
                                 </Grid.Column>
                                 
                                 <Grid.Column width={4}>
-                                    <Label>Last update:</Label><br/>
-                                    {format(post.date!, 'dd MMM yyyy h:mm aa')}
+                                    {/*<Label>Last update:</Label><br/>*/}
+                                    {/*{format(post.date!, 'dd MMM yyyy h:mm aa')}*/}
                                 </Grid.Column>
                             </Grid>
                             <Container fluid >

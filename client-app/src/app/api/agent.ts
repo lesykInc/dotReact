@@ -4,7 +4,7 @@ import { history } from '../..';
 import { Activity, ActivityFormValues } from '../models/activity';
 import { PaginatedResult } from '../models/pagination';
 import { Post, PostFormValues } from '../models/post';
-import {Photo, Profile, UserActivity } from '../models/profile';
+import {Photo, Profile, UserActivity, UserPost } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
 
@@ -103,11 +103,13 @@ const Profiles = {
         requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
     listActivities: (username: string, predicate: string) =>
         requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`),
+    listPosts: (username: string, predicate: string) =>
+        requests.get<UserPost[]>(`/profiles/${username}/posts?predicate=${predicate}`),    
     updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile)
 }
 
 const Posts = {
-    list: () => axios.get<Post[]>('/posts'),
+    list: (params: URLSearchParams) => axios.get<PaginatedResult<Post[]>>('/posts', {params}).then(responseBody),
     details: (id: string) => requests.get<Post>(`/posts/${id}`),
     create: (post: PostFormValues) => requests.post<void>('/posts', post),
     update: (post: PostFormValues) => requests.put<void>(`/posts/${post.id}`, post),

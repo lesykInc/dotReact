@@ -32,8 +32,9 @@ export interface UserActivity {
     date: Date;
 }
 
-export interface Post {
+export interface UserPost {
     id: string;
     title: string;
     content: string;
+    date: Date;
 }
