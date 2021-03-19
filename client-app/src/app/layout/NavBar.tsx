@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Button, Container, Menu, Image, Dropdown } from 'semantic-ui-react';
+import { Button, Container, Menu, Image, Dropdown, Form, Input } from 'semantic-ui-react';
 import { useStore } from '../stores/store';
 
 export default observer(function NavBar() {
@@ -22,6 +22,11 @@ export default observer(function NavBar() {
                 {/*<Menu.Item>*/}
                 {/*    <Button as={NavLink} to='/createPost' positive content='Create Post' />*/}
                 {/*</Menu.Item>*/}
+                <Menu.Item position='right'>
+                    <Form >
+                        <Input ></Input>
+                    </Form>
+                </Menu.Item>
                 <Menu.Item position='right'>
                     <Image src={user?.image || '/assets/user.png'} avatar spaced='right' />
                     <Dropdown pointing='top left' text={user?.displayName}>

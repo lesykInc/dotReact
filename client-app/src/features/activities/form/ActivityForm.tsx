@@ -13,6 +13,7 @@ import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
 import { ActivityFormValues } from '../../../app/models/activity';
+import PhotoWidgetDropzone from '../../../app/common/imageUpload/PhotoWidgetDropzone';
 
 export default observer(function ActivityForm() {
     const history = useHistory();
@@ -21,6 +22,7 @@ export default observer(function ActivityForm() {
     const { id } = useParams<{ id: string }>();
 
     const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
+    const [image, setImage] = useState("");
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The activity title is required'),
@@ -62,6 +64,7 @@ export default observer(function ActivityForm() {
                         <MyTextInput name='title' placeholder='Title' />
                         <MyTextArea rows={3} placeholder='Description' name='description' />
                         <MySelectInput options={categoryOptions} placeholder='Category'  name='category' />
+                        {/*<PhotoWidgetDropzone setFiles={setActivity} />*/}
                         <MyDateInput 
                             placeholderText='Date'  
                             name='date' 

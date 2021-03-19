@@ -11,6 +11,7 @@ namespace Application.Activities
             RuleFor(x => x.Description).NotEmpty();
             RuleFor(x => x.Date).NotEmpty();
             RuleFor(x => x.Category).NotEmpty();
+            RuleFor(x => x.Image);
             RuleFor(x => x.City).NotEmpty();
             RuleFor(x => x.Venue).NotEmpty();
         }

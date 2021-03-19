@@ -39,7 +39,16 @@ namespace Application.Posts
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetUsername());
-
+                
+                var postAttendee = new PostAttendee
+                {
+                    AppUser = user,
+                    Post = request.Post,
+                    IsAuthor = true
+                };
+                
+                request.Post.AttendeesPost.Add(postAttendee);
+                
                 _context.Posts.Add(request.Post);
 
                 var result = await _context.SaveChangesAsync() > 0;

@@ -12,10 +12,9 @@ namespace Application.Core
         public MappingProfiles()
         {
             string currentUsername = null;
-            CreateMap<Activity, Activity>();
             CreateMap<Activity, ActivityDto>()
                     .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees
-                    .FirstOrDefault(x => x.IsHost).AppUser.UserName));
+                    .FirstOrDefault(x  => x.IsHost).AppUser.UserName));
             CreateMap<ActivityAttendee, AttendeeDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName))
@@ -42,10 +41,11 @@ namespace Application.Core
                 .ForMember(d => d.Category, o => o.MapFrom(s => s.Activity.Category))
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s => 
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
-            CreateMap<Post, Post>();
             CreateMap<Post, PostDto>();
-            // .ForMember(d => d.AuthorUsername, o => o.MapFrom(s => s.Post
-            //     .FirstOrDefault(x => x.isAuthor).AppUser.UserName));
+            CreateMap<Post, PostDto>()
+                .ForMember(d => d.AuthorUsername, o => o.MapFrom(s => s.AttendeesPost
+                    .FirstOrDefault(x => x.IsAuthor).AppUser.UserName));
+            // CreateMap<>()
         }
     }
 }

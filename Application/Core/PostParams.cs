@@ -1,9 +1,8 @@
 ﻿using System;
-using Application.Core;
 
-namespace Application.Posts
+namespace Application.Core
 {
-    public class PostParams : PagingParams
+    public class PostParams
     {
         public bool IsAuthor { get; set; }
         public DateTime StartDate { get; set; } = DateTime.UtcNow;

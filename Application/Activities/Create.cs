@@ -29,25 +29,27 @@ namespace Application.Activities
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
-            public Handler(DataContext context, IUserAccessor userAccessor)
+            private readonly IPhotoAccessor _photoAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor, IPhotoAccessor photoAccessor)
             {
                 _context = context;
                 _userAccessor = userAccessor;
+                _photoAccessor = photoAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetUsername());
-
-                var attendee = new ActivityAttendee
+                
+                var activityAttendee = new ActivityAttendee
                 {
                     AppUser = user,
                     Activity = request.Activity,
                     IsHost = true
                 };
                 
-                request.Activity.Attendees.Add(attendee);
+                request.Activity.Attendees.Add(activityAttendee);
                 
                 _context.Activities.Add(request.Activity);
 
