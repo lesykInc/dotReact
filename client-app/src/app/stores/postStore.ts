@@ -51,7 +51,7 @@ export default class PostStore {
                 const date = format(post.date!, 'dd MMM yyyy');
                 posts[date] = posts[date] ? [...posts[date], post] : [post];
                 return posts;
-            }, {} as {[key: string]: Post[]})
+            }, {} as { [key: string]: Post[] })
         )
     }
 
@@ -93,6 +93,16 @@ export default class PostStore {
                 console.log(error);
                 this.setLoadingInitial(false);
             }
+        }
+    }
+
+    searchPost = async (search: string) => {
+        try {
+            const result = await agent.Posts.search(search);
+            return result;
+        } catch (error) {
+            console.log(error);
+            this.setLoadingInitial(false);
         }
     }
 

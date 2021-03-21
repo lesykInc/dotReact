@@ -113,7 +113,8 @@ const Posts = {
     details: (id: string) => requests.get<Post>(`/posts/${id}`),
     create: (post: PostFormValues) => requests.post<void>('/posts', post),
     update: (post: PostFormValues) => requests.put<void>(`/posts/${post.id}`, post),
-    delete: (id: string) => requests.del<void>(`/posts/${id}`)
+    delete: (id: string) => requests.del<void>(`/posts/${id}`),
+    search: (search: string) => requests.get<Post[]>(`/posts/search?search=${search}`)
 }
 
 const agent = {
