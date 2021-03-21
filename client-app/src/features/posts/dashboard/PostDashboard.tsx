@@ -36,14 +36,6 @@ export default observer(function PostDashboard() {
                     </>
                 ) : (
                     <>
-                        <Button
-                            floated={"right"}
-                            content={'More...'}
-                            positive
-                            onClick={handleGetNext}
-                            loading={loadingNext}
-                            disabled={pagination?.totalPages === pagination?.currentPage}
-                        />
                         <InfiniteScroll
                             pageStart={0}
                             loadMore={handleGetNext}
@@ -54,20 +46,11 @@ export default observer(function PostDashboard() {
                         </InfiniteScroll>
                     </>
                 )}
-                {/*<PostList />*/}
-                {/*<Button*/}
-                {/*    floated={"right"}*/}
-                {/*    content={'More...'}*/}
-                {/*    positive*/}
-                {/*    onClick={handleGetNext}*/}
-                {/*    loading={loadingNext}*/}
-                {/*    disabled={pagination?.totalPages === pagination?.currentPage}*/}
-                {/*/>*/}
             </Grid.Column>
             <Grid.Column width={4}> 
                 <Button as={NavLink} to='/createPost' positive content='Create Post' />
             </Grid.Column>
-            <Grid.Column width={10}>
+            <Grid.Column width={12}>
                 <Loader active={loadingNext}/>
             </Grid.Column>
         </Grid>

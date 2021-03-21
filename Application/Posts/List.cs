@@ -15,7 +15,7 @@ namespace Application.Posts
     {
         public class Query : IRequest<Result<PagedList<PostDto>>>
         {
-            public PostParams Params { get; set; }
+            public PagingParams Params { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<PagedList<PostDto>>>
@@ -33,21 +33,14 @@ namespace Application.Posts
             public async Task<Result<PagedList<PostDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var query = _context.Posts
-                    .Where(d => d.Date >= request.Params.StartDate)   
-                    .OrderBy(d => d.Date)
+                    .OrderByDescending(d => d.Date)
                     .ProjectTo<PostDto>(_mapper.ConfigurationProvider,
                         new {currentUsername = _userAccessor.GetUsername()})
                     .AsQueryable();
 
-                if (request.Params.IsAuthor)
-                {
-                    query = query.Where(x => x.AuthorUsername == _userAccessor.GetUsername());
-                }
-
-                    return Result<PagedList<PostDto>>.Success(
-                    await PagedList<PostDto>.CreateAsync(query, request.Params.PageNumber,
-                        request.Params.PageSize)
-                );
+                return Result<PagedList<PostDto>>.Success(
+                        await PagedList<PostDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)
+                    );
             }
         }
     }
