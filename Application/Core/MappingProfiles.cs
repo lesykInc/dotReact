@@ -14,7 +14,7 @@ namespace Application.Core
             string currentUsername = null;
             CreateMap<Activity, Activity>();
             CreateMap<Activity, ActivityDto>()
-                    .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees
+                .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees
                     .FirstOrDefault(x => x.IsHost).AppUser.UserName));
             CreateMap<ActivityAttendee, AttendeeDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
@@ -40,12 +40,9 @@ namespace Application.Core
                 .ForMember(d => d.Date, o => o.MapFrom(s => s.Activity.Date))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.Activity.Title))
                 .ForMember(d => d.Category, o => o.MapFrom(s => s.Activity.Category))
-                .ForMember(d => d.HostUsername, o => o.MapFrom(s => 
+                .ForMember(d => d.HostUsername, o => o.MapFrom(s =>
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
-            CreateMap<Post, Post>();
             CreateMap<Post, PostDto>();
-            // .ForMember(d => d.AuthorUsername, o => o.MapFrom(s => s.Post
-            //     .FirstOrDefault(x => x.isAuthor).AppUser.UserName));
         }
     }
 }

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210321141301_AddPostAuthor")]
+    partial class AddPostAuthor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,7 +399,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Post", b =>
                 {
                     b.HasOne("Domain.AppUser", "Author")
-                        .WithMany("Posts")
+                        .WithMany()
                         .HasForeignKey("AuthorId");
 
                     b.Navigation("Author");
@@ -489,8 +491,6 @@ namespace Persistence.Migrations
                     b.Navigation("Followings");
 
                     b.Navigation("Photos");
-
-                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

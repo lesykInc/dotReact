@@ -8,5 +8,7 @@ namespace Domain
         public string Title { get; set; }
         public DateTime Date { get; set; }
         public string Content { get; set; }
+        public string AuthorId { get; set; }
+        public AppUser Author { get; set; }
     }
 }

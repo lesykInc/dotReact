@@ -40,8 +40,9 @@ namespace Application.Posts
 
                 if (post == null) return null;
 
-                _mapper.Map(request.Post, post);
-
+                post.Content = request.Post.Content;
+                post.Title = request.Post.Title;
+                
                 var result = await _context.SaveChangesAsync() > 0;
 
                 if (!result) return Result<Unit>.Failure("Failed to update post");

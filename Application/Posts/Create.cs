@@ -40,6 +40,7 @@ namespace Application.Posts
                 var user = await _context.Users.FirstOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetUsername());
 
+                request.Post.Author = user;
                 _context.Posts.Add(request.Post);
 
                 var result = await _context.SaveChangesAsync() > 0;
