@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Core;
 using Application.Posts;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -28,8 +29,8 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Create.Command {Post = post}));
         }
-
-        // [Authorize(Policy = "IsPostHost")]
+        
+        [Authorize(Policy = "IsPostAuthor")]
         [HttpPut("{id}")]
         public async Task<IActionResult> EditPost(Guid id, Post post)
         {
@@ -37,7 +38,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Edit.Command {Post = post}));
         }
 
-        // [Authorize(Policy = "IsPostHost")]
+        [Authorize(Policy = "IsPostAuthor")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(Guid id)
         {

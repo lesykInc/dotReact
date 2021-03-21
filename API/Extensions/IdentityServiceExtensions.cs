@@ -58,8 +58,13 @@ namespace API.Extensions
                 {
                     policy.Requirements.Add(new IsHostRequirement());
                 });
+                opt.AddPolicy("IsPostAuthor", policy =>
+                {
+                    policy.Requirements.Add(new IsPostRequirement());
+                });
             });
             services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
+            services.AddTransient<IAuthorizationHandler, IsPostRequirementHandler>();
             services.AddScoped<TokenService>();
 
             return services;
