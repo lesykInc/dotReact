@@ -44,5 +44,12 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Delete.Command {Id = id}));
         }
+        
+        [HttpGet ("search")]
+        public async Task<IActionResult> SearchPost(string search)
+        {
+            return HandleResult(await Mediator.Send(new Search.Query{Search = search}));
+
+        }
     }
 }
