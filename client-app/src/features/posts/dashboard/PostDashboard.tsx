@@ -2,7 +2,7 @@
 import {useStore} from "../../../app/stores/store";
 import React, {useEffect, useState} from "react";
 import {PagingParams} from "../../../app/models/pagination";
-import {Button, Grid, Label, Loader, Menu} from "semantic-ui-react";
+import {Button, Form, Grid, Label, Loader, Menu, Segment} from "semantic-ui-react";
 import InfiniteScroll from "react-infinite-scroller";
 import PostList from "./PostList";
 import PostListItem from "./PostListItem";
@@ -36,7 +36,7 @@ export default observer(function PostDashboard() {
     }
 
     useEffect(() => {
-        if (postRegistry.size <= 1) loadPosts();
+        if (postRegistry.size <= 1) loadPosts();    
     }, [postRegistry.size, loadPosts])
 
     return (
@@ -65,14 +65,18 @@ export default observer(function PostDashboard() {
                                     <PostList/>
                                 </InfiniteScroll>
                         }
-
-
                     </>
                 )}
             </Grid.Column>
             <Grid.Column width={4}>
-                <Button as={NavLink} to='/createPost' positive content='Create Post'/>
-                <input value={search} onChange={handleSearch}/>
+                <Segment style={{position: "fixed"}}>
+                    <Button style={{width: 180}} as={NavLink} to='/createPost' positive content='Create Post'/><br/><br/>
+                    <Form>
+                        <Form.Field inline>
+                            <input value={search} onChange={handleSearch} placeholder={"Search here..."}/>
+                        </Form.Field>
+                    </Form>
+                </Segment>
             </Grid.Column>
             <Grid.Column width={12}>
                 <Loader active={loadingNext}/>

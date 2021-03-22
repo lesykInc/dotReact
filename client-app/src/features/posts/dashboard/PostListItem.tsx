@@ -30,7 +30,11 @@ export default observer(function PostListItem({ post }: Props ) {
                                 <Grid.Column width={3}>
                                     <Label>Title: </Label><br/>
                                     <Item.Header as={Link} to={`/posts/${post.id}`}>
-                                        {post.title}
+                                        {post.title}<br/>
+                                    </Item.Header>
+                                    <Label>Author: </Label><br/>
+                                    <Item.Header>
+                                        {(post.authorUserName)}
                                     </Item.Header>
                                 </Grid.Column>
                                 
@@ -41,11 +45,6 @@ export default observer(function PostListItem({ post }: Props ) {
                                         </Container>
                                     </Item.Description>
                                 </Grid.Column>
-                                
-                                <Grid.Column width={4}>
-                                    {/*<Label>Last update:</Label><br/>*/}
-                                    {/*{format(post.date!, 'dd MMM yyyy h:mm aa')}*/}
-                                </Grid.Column>
                             </Grid>
                             <Container fluid >
                                 <Button
@@ -55,37 +54,6 @@ export default observer(function PostListItem({ post }: Props ) {
                                     floated='right'
                                     content='View'
                                 />
-                                <Button
-                                    onClick={ () => setOpen(true)}
-                                    color='red'
-                                    floated='right'
-                                    content='Delete'
-                                />
-                                <Modal
-                                    basic
-                                    onClose={() => setOpen(false)}
-                                    onOpen={() => setOpen(true)}
-                                    open={open}
-                                    size='small'
-                                >
-                                    <Header icon>
-                                        <Icon name='delete' />
-                                        Delete Post?
-                                    </Header>
-                                    <Modal.Content>
-                                        <p style={{textAlign: "center"}}>
-                                            Are you sure you really want to delete the post?
-                                        </p>
-                                    </Modal.Content>
-                                    <Modal.Actions style={{textAlign: "center"}}>
-                                        <Button  basic color='green' inverted onClick={() => setOpen(false)}>
-                                            <Icon name='remove' /> No
-                                        </Button>
-                                        <Button color='red' inverted onClick={() => deletePost(post.id) }>
-                                            <Icon name='checkmark' /> Yes
-                                        </Button>
-                                    </Modal.Actions>
-                                </Modal>
                             </Container>
                         </Item.Content>
                     </Item>

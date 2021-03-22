@@ -47,7 +47,7 @@ export default observer(function ActivityDashboard() {
                 )}
             </Grid.Column>
             <Grid.Column width='6'>
-                <Button  as={NavLink} to='/createActivity' positive content='Create Activity' />
+                <Button style={{width: 400}}  as={NavLink} to='/createActivity' positive content='Create Activity' />
                 <ActivityFilters />
             </Grid.Column>
             <Grid.Column width={10}>
