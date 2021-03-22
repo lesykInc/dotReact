@@ -5,7 +5,7 @@ export interface Post {
     title: string;
     date: Date | null;
     content: string;
-    authorUserName: string;
+    authorUsername: string;
     isAuthor: boolean;
     host?: Profile;
 }

@@ -1,11 +1,11 @@
-﻿import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react'
+﻿import {observer} from 'mobx-react-lite';
+import React, {useState} from 'react'
 import {Segment, Grid, Icon, Label, Header, Button, TextArea, Form, Container, Modal} from 'semantic-ui-react'
 import {format} from 'date-fns';
-import { Post, PostFormValues } from '../../../app/models/post';
+import {Post, PostFormValues} from '../../../app/models/post';
 import MyTextInput from '../../../app/common/form/MyTextInput';
-import { Link, useHistory } from 'react-router-dom';
-import { useStore } from '../../../app/stores/store';
+import {Link, useHistory} from 'react-router-dom';
+import {useStore} from '../../../app/stores/store';
 import MyTextArea from '../../../app/common/form/MyTextArea';
 import MyDateInput from "../../../app/common/form/MyDateInput";
 import {Formik} from "formik";
@@ -15,78 +15,77 @@ interface Props {
     post: Post
 }
 
-export default observer(function PostDetailInfo({ post }: Props) {
-    
+export default observer(function PostDetailInfo({post}: Props) {
+
     const {postStore, userStore} = useStore();
     const {updatePost, deletePost} = postStore;
-    
+
     const [edit, setEdit] = useState(false);
     const [open, setOpen] = useState(false);
     const history = useHistory();
-    // console.log(post);
-   alert(post.authorUserName);
-    post.isAuthor = post.authorUserName == post.host?.username;
-    
-    
-    
+    let isCurrentUserAuthor = userStore.user?.username === post.authorUsername;
+
     return (
-        <Segment.Group >
+        <Segment.Group>
             <Segment attached='top' clearing>
                 <Grid centered>
                     {!edit &&
                     <Grid.Column width={12}>
-                            <br/>
-                            <Header>
-                        {post.title}
-                            </Header>
-                        
-                            <Container text >
-                        {post.content}
-                            </Container>
-                            <br/>
-                            <Button color={"instagram"} floated={"right"} as={Link} to={`/posts`}>Back</Button>
-                        {/*{post.isAuthor &&*/}
-                        {(post.authorUserName) &&
-                        <>
-                            < Button onClick={() => setEdit(true)} color={"teal"} floated={"right"} >Edit</Button>
-                                <Button
-                                    onClick={() => setOpen(true)}
-                                    color='red'
-                                    floated='right'
-                                    content='Delete'
-                                />
-                                <Modal
-                                    basic
-                                    onClose={() => setOpen(false)}
-                                    onOpen={() => setOpen(true)}
-                                    open={open}
-                                    size='small'
-                                >
+                        <br/>
+                        <Header>
+                            {post.title}
+                        </Header>
+
+                        <Container text>
+                            {post.content}
+                        </Container>
+                        <br/>
+                        <Button color={"instagram"} floated={"right"} as={Link} to={`/posts`}>Back</Button>
+                        {isCurrentUserAuthor &&
+                        <>i
+                            < Button onClick={() => setEdit(true)} color={"teal"} floated={"right"}>Edit</Button>
+                            <Button
+                                onClick={() => setOpen(true)}
+                                color='red'
+                                floated='right'
+                                content='Delete'
+                            />
+                            <Modal
+                                basic
+                                onClose={() => setOpen(false)}
+                                onOpen={() => setOpen(true)}
+                                open={open}
+                                size='small'
+                            >
                                 <Header icon>
-                                <Icon name='delete' /> Delete Post?
+                                    <Icon name='delete'/> Delete Post?
                                 </Header>
                                 <Modal.Content>
                                     <p style={{textAlign: "center"}}>
                                         Are you sure you really want to delete the post?
-                                     </p>
+                                    </p>
                                 </Modal.Content>
                                 <Modal.Actions style={{textAlign: "center"}}>
-                                    <Button  basic color='green' inverted onClick={() => setOpen(false)}>
-                                        <Icon name='remove' /> No
+                                    <Button basic color='green' inverted onClick={() => setOpen(false)}>
+                                        <Icon name='remove'/> No
                                     </Button>
-                                    <Button color='red' inverted onClick={() => {deletePost(post.id); setOpen(false); history.push(`/posts`) }}>
-                                        <Icon name='checkmark' /> Yes
+                                    <Button color='red' inverted onClick={() => {
+                                        deletePost(post.id);
+                                        setOpen(false);
+                                        history.push(`/posts`)
+                                    }}>
+                                        <Icon name='checkmark'/> Yes
                                     </Button>
                                 </Modal.Actions>
-                                </Modal>
-                            </>
+                            </Modal>
+                        </>
                         }
                     </Grid.Column>
                     }
 
                     {edit &&
                     <Grid.Column width={12}>
-                        <PostForm />
+                        <PostForm/>
                     </Grid.Column>
                     }
                 </Grid>
