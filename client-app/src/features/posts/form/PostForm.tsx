@@ -58,7 +58,7 @@ export default observer(function PostForm() {
     if (loadingInitial) return <LoadingComponent content='Loading post...' />
 
     return (
-        <Segment clearing >
+        <Segment style={ {width: 700, margin: '0 auto'} } clearing >
             <Header content='Post Details' sub color='teal' />
             <Formik
                 validationSchema={validationSchema}
@@ -82,7 +82,7 @@ export default observer(function PostForm() {
                             disabled={isSubmitting || !dirty || !isValid}
                             floated='right'
                             positive type='submit' content='Submit' />
-                        <Button as={Link} to='/posts' floated='right' type='button' content='Cancel' />
+                        <Button as={Link} to='/posts' floated='right' type='button' content='Back' />
                     </Form>
                 )}
             </Formik>

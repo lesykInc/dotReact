@@ -109,7 +109,7 @@ export default class PostStore {
     private setPost = (post: Post) => {
         const user = store.userStore.user;
         if (user) {
-            post.isAuthor = post.authorUserName === user.username;
+            post.isAuthor = post.authorUsername === user.username;
             // post.host = post.attendees?.find(x => x.username === post.hostUsername);
         }
         post.date = new Date(post.date!);
@@ -129,7 +129,7 @@ export default class PostStore {
         try {
             await agent.Posts.create(post);
             const newPost = new Post(post);
-            newPost.authorUserName = user!.username;
+            newPost.authorUsername = user!.username;    
             this.setPost(newPost);
             runInAction(() => {
                 this.selectedPost = newPost;

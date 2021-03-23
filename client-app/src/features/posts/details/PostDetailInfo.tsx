@@ -23,26 +23,28 @@ export default observer(function PostDetailInfo({post}: Props) {
     const [edit, setEdit] = useState(false);
     const [open, setOpen] = useState(false);
     const history = useHistory();
-    let isCurrentUserAuthor = userStore.user?.username === post.authorUsername;
-
+    // let isCurrentUserAuthor = userStore.user?.username === post.authorUsername;
+    post.isAuthor = userStore.user?.username === post.authorUsername;
+    
     return (
-        <Segment.Group>
-            <Segment attached='top' clearing>
-                <Grid centered>
-                    {!edit &&
+        <>
+        {!edit && <>
+        <Segment.Group style={ {width: 700, margin: '0 auto'} }>
+            <Segment clearing>
+                <Grid width={12} centered>
+                    
                     <Grid.Column width={12}>
                         <br/>
                         <Header>
                             {post.title}
                         </Header>
 
-                        <Container text>
-                            {post.content}
+                        <Container content={post.content}>
                         </Container>
                         <br/>
                         <Button color={"instagram"} floated={"right"} as={Link} to={`/posts`}>Back</Button>
-                        {isCurrentUserAuthor &&
-                        <>i
+                        {post.isAuthor &&
+                        <>
                             < Button onClick={() => setEdit(true)} color={"teal"} floated={"right"}>Edit</Button>
                             <Button
                                 onClick={() => setOpen(true)}
@@ -81,15 +83,15 @@ export default observer(function PostDetailInfo({post}: Props) {
                         </>
                         }
                     </Grid.Column>
-                    }
-
-                    {edit &&
-                    <Grid.Column width={12}>
-                        <PostForm/>
-                    </Grid.Column>
-                    }
+                    
                 </Grid>
             </Segment>
-        </Segment.Group>
-    )
+        </Segment.Group></>}
+        
+    {edit && <>
+    <Grid.Column >
+        <PostForm/>
+    </Grid.Column>
+    </>}
+        </>)
 })

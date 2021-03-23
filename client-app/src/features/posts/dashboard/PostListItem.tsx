@@ -30,11 +30,11 @@ export default observer(function PostListItem({ post }: Props ) {
                                 <Grid.Column width={3}>
                                     <Label>Title: </Label><br/>
                                     <Item.Header as={Link} to={`/posts/${post.id}`}>
-                                        {post.title}<br/>
-                                    </Item.Header>
-                                    <Label>Author: </Label><br/>
-                                    <Item.Header>
-                                        {(post.authorUserName)}
+                                        <h2>{post.title}<br/></h2>
+                                    </Item.Header><br/>
+                                    <Label>Author: </Label>
+                                    <Item.Header as={Link} to={`/profiles/${post.authorUsername}`}>
+                                        <h3>{post.authorUsername}</h3>
                                     </Item.Header>
                                 </Grid.Column>
                                 
