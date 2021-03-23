@@ -43,7 +43,11 @@ namespace Application.Core
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s =>
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
             CreateMap<Post, PostDto>()
-                .ForMember(d => d.AuthorId, o => o.MapFrom(s => s.Author.Id));
+                .ForMember(d => d.AuthorId, o => o.MapFrom(s => s.Author.Id));            
+            CreateMap<Post, PostListDto>()
+                .ForMember(d => d.AuthorId, o => o.MapFrom(s => s.Author.Id))
+                .ForMember(d => d.Content, o => o.MapFrom(s => s.Content.Substring(0, 300)));
+            
         }
     }
 }
