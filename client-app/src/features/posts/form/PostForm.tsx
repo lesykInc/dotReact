@@ -18,6 +18,7 @@ import { useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 // @ts-ignore
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {date} from "yup";
 
 
 export default observer(function PostForm() {
@@ -29,6 +30,7 @@ export default observer(function PostForm() {
     const [post, setPost] = useState<PostFormValues>(new PostFormValues());
     const [isEditorChanged, setIsEditorChanged] = useState(false);
     
+    let myEditor: any;
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The post title is required'),
@@ -41,6 +43,7 @@ export default observer(function PostForm() {
     }, [id, loadPost]);
 
     function handleFormSubmit(post: PostFormValues) {
+        post.content = myEditor.getData()
         if (!post.id) {
             let newPost = {
                 ...post,
@@ -50,10 +53,6 @@ export default observer(function PostForm() {
         } else {
             updatePost(post).then(() => history.push(`/posts/${post.id}`))
         }
-    }
-    
-    function handleFormChangeValidator(a: boolean) {
-        setIsEditorChanged(!a);
     }
    
     if (loadingInitial) return <LoadingComponent content='Loading post...' />
@@ -69,20 +68,18 @@ export default observer(function PostForm() {
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form  className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput name='title' placeholder='Title' />
-
+                        
                         <CKEditor
                             editor={ClassicEditor}
-                            onReady={(editor: any) => editor.setData(post.content)}
-                            onChange={(event: any, editor: any) => {
-                                setPost({...post, content: editor.getData()})
-                                setIsEditorChanged(true);
-                                 }
-                            }
+                            onReady={(editor: any) => {
+                                myEditor = editor;
+                                editor.setData(post.content)
+                                }}
                         />
                         
                         <Button
-                            // disabled={isSubmitting || (!dirty && setIsEditorChanged(false))  || !isValid}
-                            disabled={isSubmitting || (!dirty && !isEditorChanged) || !isValid}
+                            disabled={isSubmitting || (!dirty && isEditorChanged) || !isValid}
+                            // disabled={isSubmitting || !dirty || !isValid}
                             floated='right'
                             positive type='submit' content='Submit' />
                         <Button as={Link} to='/posts' floated='right' type='button' content='Back' />
