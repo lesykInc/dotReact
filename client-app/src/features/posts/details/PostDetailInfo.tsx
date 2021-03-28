@@ -39,7 +39,8 @@ export default observer(function PostDetailInfo({post}: Props) {
                             {post.title}
                         </Header>
 
-                        <Container content={post.content}>
+                        <Container>
+                            <div dangerouslySetInnerHTML={{ __html: post.content }} />
                         </Container>
                         <br/>
                         <Button color={"instagram"} floated={"right"} as={Link} to={`/posts`}>Back</Button>

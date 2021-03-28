@@ -41,7 +41,8 @@ export default observer(function PostListItem({ post }: Props ) {
                                 <Grid.Column width={9}>
                                     <Label>Content: </Label>
                                     <Item.Description>
-                                        <Container fluid content={post.content} >
+                                        <Container fluid  >
+                                            <div dangerouslySetInnerHTML={{ __html: post.content }} />
                                         </Container>
                                     </Item.Description>
                                 </Grid.Column>
