@@ -13,14 +13,11 @@ import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
 import { PostFormValues } from '../../../app/models/post';
-import JoditEditor from 'jodit-react';
 import { useRef } from 'react';
-// import Editor from '../../../app/common/form/Editor';
 // @ts-ignore
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 // @ts-ignore
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import Editor from '../../../app/common/form/Editor';
 
 
 export default observer(function PostForm() {
@@ -30,7 +27,8 @@ export default observer(function PostForm() {
     const { id } = useParams<{ id: string }>();
 
     const [post, setPost] = useState<PostFormValues>(new PostFormValues());
-    const [text, setText] = useState(post);
+    const [isEditorChanged, setIsEditorChanged] = useState(false);
+    
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The post title is required'),
@@ -54,7 +52,10 @@ export default observer(function PostForm() {
         }
     }
     
-
+    function handleFormChangeValidator(a: boolean) {
+        setIsEditorChanged(!a);
+    }
+   
     if (loadingInitial) return <LoadingComponent content='Loading post...' />
 
     return (
@@ -66,20 +67,22 @@ export default observer(function PostForm() {
                 initialValues={post}
                 onSubmit={values => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                    <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+                    <Form  className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput name='title' placeholder='Title' />
-                        <MyTextArea rows={6} placeholder='Content' name='content' />
-                        
-        
-                        <MyDateInput
-                            placeholderText='Date'
-                            name='date'
-                            showTimeSelect
-                            timeCaption='time'
-                            dateFormat='MMMM d, yyyy h:mm aa'
+
+                        <CKEditor
+                            editor={ClassicEditor}
+                            onReady={(editor: any) => editor.setData(post.content)}
+                            onChange={(event: any, editor: any) => {
+                                setPost({...post, content: editor.getData()})
+                                setIsEditorChanged(true);
+                                 }
+                            }
                         />
+                        
                         <Button
-                            disabled={isSubmitting || !dirty || !isValid}
+                            // disabled={isSubmitting || (!dirty && setIsEditorChanged(false))  || !isValid}
+                            disabled={isSubmitting || (!dirty && !isEditorChanged) || !isValid}
                             floated='right'
                             positive type='submit' content='Submit' />
                         <Button as={Link} to='/posts' floated='right' type='button' content='Back' />
