@@ -79,7 +79,6 @@ export default observer(function PostForm() {
                         
                         <Button
                             disabled={isSubmitting || (!dirty && isEditorChanged) || !isValid}
-                            // disabled={isSubmitting || !dirty || !isValid}
                             floated='right'
                             positive type='submit' content='Submit' />
                         <Button as={Link} to='/posts' floated='right' type='button' content='Back' />
