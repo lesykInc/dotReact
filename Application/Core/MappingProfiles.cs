@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Application.Activities;
 using Application.Comments;
@@ -43,7 +44,8 @@ namespace Application.Core
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s =>
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
             CreateMap<Post, PostDto>()
-                .ForMember(d => d.AuthorId, o => o.MapFrom(s => s.Author.Id));            
+                .ForMember(d => d.AuthorId, o => o.MapFrom(s => s.Author.Id))           
+                .ForMember(d => d.Date, o => o.MapFrom(s => s.Date));            
             CreateMap<Post, PostListDto>()
                 .ForMember(d => d.AuthorId, o => o.MapFrom(s => s.Author.Id))
                 .ForMember(d => d.Content, o => o.MapFrom(s => s.Content.Substring(0, 300)));

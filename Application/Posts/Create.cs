@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
 using Application.Interfaces;
@@ -41,6 +42,7 @@ namespace Application.Posts
                     x.UserName == _userAccessor.GetUsername());
 
                 request.Post.Author = user;
+                request.Post.Date = DateTime.Now;
                 _context.Posts.Add(request.Post);
 
                 var result = await _context.SaveChangesAsync() > 0;
